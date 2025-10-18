@@ -1,6 +1,7 @@
 "use client"
 
 import React, { useState } from 'react'
+import Image from 'next/image' // 👈 CORREÇÃO 1: Importar o componente Image
 import { useRouter } from 'next/navigation'
 import {
   Star,
@@ -155,10 +156,14 @@ const ProductDetailClient: React.FC<ProductDetailProps> = ({ product }) => {
                 </button>
 
                 <div className={styles.mainImage}>
-                  <img
+                  {/* CORREÇÃO 2.1: Substituído <img> por <Image /> com width e height */}
+                  <Image
                     src={productImages[selectedImage]}
                     alt={product.name}
                     className={styles.productImage}
+                    width={500} // Ajuste conforme o tamanho do seu layout CSS
+                    height={500} // Ajuste conforme o tamanho do seu layout CSS
+                    priority // Sugestão: adicione priority para LCP
                   />
                   {product.discount && product.discount > 0 && (
                     <span className={styles.discountBadge}>-{product.discount}%</span>
@@ -177,7 +182,13 @@ const ProductDetailClient: React.FC<ProductDetailProps> = ({ product }) => {
                     onClick={() => setSelectedImage(index)}
                     className={`${styles.thumbnail} ${selectedImage === index ? styles.thumbnailActive : ''}`}
                   >
-                    <img src={image} alt={`${product.name} ${index + 1}`} />
+                    {/* CORREÇÃO 2.2: Substituído <img> por <Image /> com width e height */}
+                    <Image 
+                      src={image} 
+                      alt={`${product.name} ${index + 1}`} 
+                      width={80} // Ajuste para o tamanho das miniaturas
+                      height={80} // Ajuste para o tamanho das miniaturas
+                    />
                   </button>
                 ))}
               </div>

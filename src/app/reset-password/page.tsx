@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useCallback } from "react";
+import Image from "next/image"; // 👈 CORREÇÃO: Importado Image
 import { Mail } from "lucide-react";
 import "../styles/ResetPasswordApp.css";
 
@@ -39,7 +40,14 @@ const ResetPasswordApp = () => {
     <div className="reset-container">
       <div className="reset-box">
         <div className="reset-header">
-          <img src="/images/logo-solucell.png" alt="Logo" className="reset-logo" />
+          {/* 👈 CORREÇÃO: Substituído <img> por <Image /> (Linha 42) */}
+          <Image 
+            src="/images/logo-solucell.png" 
+            alt="Logo" 
+            className="reset-logo" 
+            width={150} // Valores arbitrários, ajuste conforme necessário
+            height={50} // Valores arbitrários, ajuste conforme necessário
+          />
           <h2>Redefinir Senha</h2>
           <p>Informe seu e-mail e enviaremos um link para redefinir sua senha.</p>
         </div>

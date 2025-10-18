@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useCallback } from "react";
+import Image from "next/image"; // 👈 CORREÇÃO: Importado Image
 import { Mail, Lock, User, Repeat2 } from "lucide-react";
 import "../styles/RegisterApp.css";
 
@@ -56,7 +57,14 @@ const RegisterApp = () => {
       <div className="register-box">
         {/* Cabeçalho */}
         <div className="register-header">
-          <img src="/images/logo-solucell.png" alt="Logo" className="register-logo" />
+          {/* 👈 CORREÇÃO: Substituído <img> por <Image /> (Linha 59) */}
+          <Image
+            src="/images/logo-solucell.png"
+            alt="Logo"
+            className="register-logo"
+            width={150} // Valores arbitrários, ajuste conforme necessário
+            height={50} // Valores arbitrários, ajuste conforme necessário
+          />
           <h2>Crie sua Conta</h2>
           <p>
             Junte-se a nós e tenha acesso a ofertas exclusivas e acompanhe seus

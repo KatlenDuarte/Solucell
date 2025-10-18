@@ -5,8 +5,9 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "export": "next export",
     "start": "next start",
-    "lint": "eslint"
+    "deploy": "next build && next export"
   },
   "dependencies": {
     "@lumi.new/sdk": "^0.2.1",

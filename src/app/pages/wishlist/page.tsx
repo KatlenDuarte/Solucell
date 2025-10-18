@@ -1,5 +1,7 @@
 'use client'
-import { useState, useMemo, useEffect } from 'react' // Importado useEffect
+// [IMPORTS CORRIGIDOS] Importamos 'Image' do 'next/image'
+import { useState, useMemo, useEffect } from 'react'
+import Image from 'next/image' 
 import Header from '../../components/Header'
 import { Heart, Star, ShoppingCart, Filter, Trash2 } from 'lucide-react'
 import './favorite.css'
@@ -162,7 +164,8 @@ export default function Favorites() {
         const productToAdd = favoriteProducts.find(p => p.id === productId)
         if (!productToAdd || !productToAdd.inStock) return
 
-        let cartData: CartItem[] = JSON.parse(localStorage.getItem('cart') || '[]')
+        // [CORREÇÃO LINHA 191] Troca 'let' por 'const'
+        const cartData: CartItem[] = JSON.parse(localStorage.getItem('cart') || '[]')
 
         const existingItem = cartData.find(item => item.id === productId)
         if (existingItem) {
@@ -188,7 +191,8 @@ export default function Favorites() {
             return
         }
 
-        let cartData: CartItem[] = JSON.parse(localStorage.getItem('cart') || '[]')
+        // [CORREÇÃO LINHA 254] Troca 'let' por 'const'
+        const cartData: CartItem[] = JSON.parse(localStorage.getItem('cart') || '[]')
 
         inStockItems.forEach(productToAdd => {
             const existingItem = cartData.find(item => item.id === productToAdd.id)
@@ -256,10 +260,15 @@ export default function Favorites() {
     const ProductCard = ({ product }: { product: FavoriteProduct }) => (
         <div className="favorite-card">
             <div className="favorite-image-container">
-                <img
+                {/* [CORREÇÃO] Substitui <img> por <Image /> e adiciona props de tamanho */}
+                <Image
                     src={product.image}
                     alt={product.name}
+                    width={300} // Ajuste o valor conforme o layout
+                    height={200} // Ajuste o valor conforme o layout
                     className="favorite-image"
+                    // layout="responsive" // Pode ser útil se você estiver usando CSS complexo
+                    objectFit="cover" // Garante que a imagem cubra o container
                 />
                 <div className="discount-badge">
                     -{product.discount}%

@@ -3,7 +3,7 @@
 import React, { useState, useMemo } from 'react'
 import Link from 'next/link'
 import { Plus, Search, Eye, Trash2, X } from 'lucide-react' 
-import toast from 'react-hot-toast'
+import toast, { Toast } from 'react-hot-toast' // ⭐️ Importando 'Toast' para tipagem correta
 // ATENÇÃO: Verifique o caminho. Se você está usando 'NewSale.module.css', o nome ideal seria 'Vendas.module.css'
 import styles from '../../../styles/NewSale.module.css' 
 
@@ -24,6 +24,7 @@ interface VendaSimplificada {
 
 // --- MOCK DATA (Mantido) ---
 const mockVendas: VendaSimplificada[] = [
+    // ... (dados do mock) ...
     {
         numeroVenda: 'V0001', dataVenda: '2025-10-02T10:00:00Z', valorTotal: 150.75,
         formaPagamento: 'Pix', vendedor: 'Maria C.', 
@@ -51,11 +52,12 @@ const mockVendas: VendaSimplificada[] = [
     },
 ];
 
-// --- Modal de Exclusão Simples e Funcional (Compatível) ---
-const CustomDeleteToast: React.FC<{ t: any; numeroVenda: string; onConfirm: () => void }> = ({ t, numeroVenda, onConfirm }) => {
+// --- Modal de Exclusão Simples e Funcional ---
+// ⭐️ CORREÇÃO 1: Tipagem correta de 't' de 'any' para 'Toast' do 'react-hot-toast'
+const CustomDeleteToast: React.FC<{ t: Toast; numeroVenda: string; onConfirm: () => void }> = ({ t, numeroVenda, onConfirm }) => {
     // Usamos estilos INLINE simples para garantir que a funcionalidade não dependa do seu CSS
     const modalStyle: React.CSSProperties = {
-        backgroundColor: '#ffffff', // Fundo branco
+        backgroundColor: '#ffffff',
         boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)',
         borderRadius: '8px',
         padding: '16px',
@@ -97,7 +99,6 @@ const CustomDeleteToast: React.FC<{ t: any; numeroVenda: string; onConfirm: () =
 // --- Venda Actions (Componente de Ações na Tabela) ---
 interface VendaActionsProps {
     venda: VendaSimplificada;
-    // CORRIGIDO: Removido 'Promise<void>' pois no mock, a exclusão é síncrona
     deleteVenda: (numeroVenda: string) => void; 
     handleViewDetails: (venda: VendaSimplificada) => void; 
 }
@@ -125,9 +126,10 @@ const VendaActions: React.FC<VendaActionsProps> = ({ venda, deleteVenda, handleV
 // --- Componente Principal ---
 const Vendas: React.FC = () => {
     const [vendas, setVendas] = useState<VendaSimplificada[]>(mockVendas) 
-    const [loading, setLoading] = useState(false) 
+    // ⭐️ CORREÇÃO 2: Removido 'setLoading' da desestruturação para resolver o aviso de variável não utilizada (Linha 128 do seu log)
+    const [loading] = useState(false) 
     const [searchTerm, setSearchTerm] = useState('')
-    const [paymentFilter, setPaymentFilter] = useState('todos') 
+    const [paymentFilter, setPaymentFilter] = useState<VendaSimplificada['formaPagamento'] | 'todos'>('todos') // ⭐️ Tipagem melhorada
     const [dateFilter, setDateFilter] = useState('')
 
     // Lógica de Exclusão com Modal SIMPLIFICADO
@@ -139,9 +141,10 @@ const Vendas: React.FC = () => {
         };
 
         // Exibe o modal customizado de confirmação
+        // ⭐️ CORREÇÃO 3: O 't' dentro da arrow function é tipado implicitamente, mas o componente CustomDeleteToast agora aceita o tipo correto 'Toast'.
         toast.custom((t) => (
             <CustomDeleteToast 
-                t={t} 
+                t={t as Toast} // Garante a tipagem correta para o componente
                 numeroVenda={numeroVenda} 
                 onConfirm={onConfirm}
             />
@@ -154,7 +157,6 @@ const Vendas: React.FC = () => {
             `${item.nome} (${item.quantidade}x)`
         ).join(', ');
 
-        // CORRIGIDO: Usando estilos INLINE simples para garantir a visibilidade do toast
         toast.success(
             <div style={{ padding: '0.5rem', minWidth: '300px' }}>
                 <p style={{ fontWeight: 700, color: '#212529' }}>Detalhes da Venda {venda.numeroVenda}</p>
@@ -175,13 +177,13 @@ const Vendas: React.FC = () => {
         return styles['status-pago']
     }
 
-    // [Lógica de Filtros e Resumo (inalterada) omitida para brevidade]
     const filteredVendas = useMemo(() => {
-         return vendas.filter(venda => {
+        return vendas.filter(venda => {
             const primaryItemName = venda.itens[0]?.nome.toLowerCase() || ''
             const matchesSearch = venda.numeroVenda.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                                  primaryItemName.includes(searchTerm.toLowerCase())
+                                primaryItemName.includes(searchTerm.toLowerCase())
 
+            // ⭐️ Ajuste para compatibilidade com o tipo 'todos'
             const matchesPayment = paymentFilter === 'todos' || venda.formaPagamento === paymentFilter
 
             const matchesDate = !dateFilter || venda.dataVenda.startsWith(dateFilter)
@@ -221,8 +223,6 @@ const Vendas: React.FC = () => {
         if (itens.length === 1) return firstItem
         return `${firstItem} +${itens.length - 1} ${itens.length > 2 ? 'itens' : 'item'}`
     }
-
-    // [Restante da renderização (inalterada) omitida para brevidade]
 
     if (loading) {
         return (
@@ -297,7 +297,7 @@ const Vendas: React.FC = () => {
                             <select
                                 id="payment"
                                 value={paymentFilter}
-                                onChange={(e) => setPaymentFilter(e.target.value)}
+                                onChange={(e) => setPaymentFilter(e.target.value as VendaSimplificada['formaPagamento'] | 'todos')} // ⭐️ Cast para o tipo correto
                                 className={styles.filters__select}
                             >
                                 <option value="todos">Todos os Pagamentos</option>
@@ -336,7 +336,7 @@ const Vendas: React.FC = () => {
                         <div className={styles.empty__state}>
                             <p className={styles['empty__state-title']}>Nenhuma venda encontrada 🧐</p>
                             <p className={styles['empty__state-subtitle']}>
-                                Ajuste seus filtros ou clique em "Registrar Nova Venda".
+                                Ajuste seus filtros ou clique em &quot;Registrar Nova Venda&quot;. {/* ⭐️ CORRIGIDO: Aspas escapadas */}
                             </p>
                         </div>
                     ) : (

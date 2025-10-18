@@ -1,6 +1,8 @@
 'use client'
 import React, { useState, useCallback, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
+// [IMPORTS CORRIGIDOS] Importamos 'Image' do 'next/image'
+import Image from 'next/image' 
 import {
     Search, ShoppingCart, User, Heart, Menu, X,
     Smartphone, SmartphoneCharging, Headphones, BatteryCharging, LogIn, LogOut
@@ -61,7 +63,7 @@ const Header = () => {
     }
 
     const handleLogoClick = () => goTo('/')
-    
+
     const handleAccountAction = () => {
         if (isLoggedIn) {
             goTo('/pages/account')
@@ -91,7 +93,14 @@ const Header = () => {
             <div className={styles.container}>
                 <div className={styles.mainContent}>
                     <button className={styles.logoGroup} onClick={handleLogoClick}>
-                        <img src="/images/logo-solucell.png" alt="Logo" className={styles.logo} />
+                        {/* [CORREÇÃO LINHA 259/281] Substitui <img> por <Image /> e adiciona width/height */}
+                        <Image 
+                            src="/images/logo-solucell.png" 
+                            alt="Logo" 
+                            width={120} // Adicione o valor real da largura
+                            height={32} // Adicione o valor real da altura
+                            className={styles.logo} 
+                        />
                     </button>
 
                     <form onSubmit={handleDesktopSearch} className={styles.searchDesktopWrapper}>

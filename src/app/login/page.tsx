@@ -1,20 +1,23 @@
 "use client";
 
 import React, { useState, useCallback } from "react";
+import Image from "next/image"; // OK: Usando <Image /> para otimização
 import { Lock } from "lucide-react";
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebookF } from "react-icons/fa";
 import "../styles/LoginApp.css";
 
 const LoginApp = () => {
+  // OK: Estado definido com const, resolvendo 'prefer-const' se houvesse no estado
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
+  // CORREÇÃO 1: O tipo do evento é 'React.FormEvent<HTMLFormElement>' para submissão
   const handleLogin = useCallback(
-    async (e: { preventDefault: () => void }) => {
+    async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       setError("");
       setSuccess("");
@@ -49,7 +52,14 @@ const LoginApp = () => {
     <div className="login-container">
       <div className="login-box">
         <div className="login-header">
-          <img src="/images/logo-solucell.png" alt="Logo" className="login-logo" />
+          {/* OK: <Image /> já está correto */}
+          <Image
+            src="/images/logo-solucell.png"
+            alt="Logo Solucell"
+            width={120} // Tamanho real (ajuste conforme necessário)
+            height={40} // Tamanho real (ajuste conforme necessário)
+            className="login-logo"
+          />
           <h2>Faça Login</h2>
           <p>Entre em sua conta para acessar ofertas exclusivas.</p>
         </div>

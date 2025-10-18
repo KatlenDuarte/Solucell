@@ -3,9 +3,13 @@
 import React, { useState, useMemo } from 'react'
 import Header from '../components/Header'
 import ProductCard from '../components/ProductCard'
-import { allProducts, Product } from '../data/products' 
+// ⭐️ CORREÇÃO 1: Removida a interface 'Product' do import para resolver o warning
+import { allProducts } from '../data/products' 
 import styles from '../styles/Category.module.css'
 import { Star, TrendingUp } from 'lucide-react' 
+
+// Interface Product movida para onde é usada (ou assumida estar em '../data/products')
+// e removida do escopo do arquivo se não for tipar nada diretamente aqui.
 
 const DealsPage: React.FC = () => {
     const maxGlobalPrice = 3000
@@ -37,7 +41,8 @@ const DealsPage: React.FC = () => {
     }, [])
 
     const filteredAndSortedProducts = useMemo(() => {
-        let filtered = baseDealsProducts.filter(product => {
+        // ⭐️ CORREÇÃO 2: 'let filtered' mudada para 'const filtered'
+        const filtered = baseDealsProducts.filter(product => {
             const matchesCategory = !filters.category || product.category === filters.category
             const matchesDiscountThreshold = !filters.discountThreshold || 
                 (product.discount && product.discount >= filters.discountThreshold) ||
@@ -48,26 +53,30 @@ const DealsPage: React.FC = () => {
             return matchesCategory && matchesDiscountThreshold && matchesPrice && matchesRating
         })
 
+        // A ordenação requer uma cópia do array filtrado para evitar side effects no useMemo
+        const sorted = [...filtered]; 
+
         switch (filters.sortBy) {
             case 'price-low':
-                return filtered.sort((a, b) => a.currentPrice - b.currentPrice)
+                return sorted.sort((a, b) => a.currentPrice - b.currentPrice)
             case 'price-high':
-                return filtered.sort((a, b) => b.currentPrice - a.currentPrice)
+                return sorted.sort((a, b) => b.currentPrice - a.currentPrice)
             case 'rating':
-                return filtered.sort((a, b) => b.rating - a.rating)
+                return sorted.sort((a, b) => b.rating - a.rating)
             case 'discount-high': 
-                return filtered.sort((a, b) => (b.discount || 0) - (a.discount || 0)) 
+                return sorted.sort((a, b) => (b.discount || 0) - (a.discount || 0)) 
             default:
                 return filtered
         }
     }, [filters, baseDealsProducts])
 
-    const updateFilter = (key: string, value: any) => {
+    // ⭐️ CORREÇÃO 3: Tipo 'any' substituído por um tipo mais específico para o filtro
+    const updateFilter = (key: keyof typeof filters, value: string | number | number[]) => {
         setFilters(prev => ({ ...prev, [key]: value }))
     }
     
     const resetFilters = () => {
-         setFilters({
+        setFilters({
             category: '',
             discountThreshold: 0,
             priceRange: [0, maxGlobalPrice],
@@ -77,18 +86,18 @@ const DealsPage: React.FC = () => {
     }
 
     const renderStars = (rating: number) => {
-         const maxStars = 5
-         const filledStars = rating
-         const emptyStars = maxStars - filledStars
-         return (
-             <div style={{ display: 'flex', alignItems: 'center', gap: '2px' }}>
-                 {Array.from({ length: filledStars }).map((_, i) => (
-                     <Star key={`filled-${i}`} size={16} style={{ color: '#f59e0b', fill: '#f59e0b' }} />
-                 ))}
-                 {Array.from({ length: emptyStars }).map((_, i) => (
-                     <Star key={`empty-${i}`} size={16} style={{ color: '#d1d5db', fill: 'none' }} />
-                 ))}
-             </div>
+        const maxStars = 5
+        const filledStars = rating
+        const emptyStars = maxStars - filledStars
+        return (
+            <div style={{ display: 'flex', alignItems: 'center', gap: '2px' }}>
+                {Array.from({ length: filledStars }).map((_, i) => (
+                    <Star key={`filled-${i}`} size={16} style={{ color: '#f59e0b', fill: '#f59e0b' }} />
+                ))}
+                {Array.from({ length: emptyStars }).map((_, i) => (
+                    <Star key={`empty-${i}`} size={16} style={{ color: '#d1d5db', fill: 'none' }} />
+                ))}
+            </div>
         )
     }
 
@@ -98,13 +107,13 @@ const DealsPage: React.FC = () => {
             <main className={styles.main}>
                 <div className={styles.container}>
                     <div className={styles.breadcrumb}>
-                        <span>Home</span> &gt; <span className={styles.active}>Ofertas</span>
+                        <span>Home</span> {'>'} <span className={styles.active}>Ofertas</span>
                     </div>
 
                     <div className={styles.pageHeader}>
                         <h1 className={styles.title} style={{ color: '#dc2626', display: 'flex', alignItems: 'center', gap: '10px' }}>
-                             <TrendingUp size={30} />
-                             Ofertas e Destaques
+                            <TrendingUp size={30} />
+                            Ofertas e Destaques
                         </h1>
                         <p className={styles.subtitle}>{filteredAndSortedProducts.length} produtos em destaque</p>
                     </div>
