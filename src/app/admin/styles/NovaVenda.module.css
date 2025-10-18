@@ -1,0 +1,436 @@
+/* ========================================================= */
+/* NovaVenda.module.css (Utilizando Variáveis Globais) */
+/* ========================================================= */
+
+/* NOTA: Não precisamos redefinir as variáveis aqui, pois elas virão do globals.css */
+
+/* ========================================================= */
+/* LAYOUT BASE */
+/* ========================================================= */
+.pageContent {
+
+    background-color: var(--light-bg);
+   margin-left: 15rem;
+    width: auto;
+    padding: 0;
+    min-height: 100vh;
+}
+
+.wrapper {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0px 20px;
+}
+
+/* ========================================================= */
+/* HEADER E NAVEGAÇÃO */
+/* ========================================================= */
+/* --- HEADER E NAVEGAÇÃO --- */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 35px; /* Mais espaço abaixo do header */
+}
+
+.header__title-group {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.header__title {
+    font-size: 2.2rem; /* Título maior */
+    color: var(--text-dark);
+    margin: 0;
+}
+
+.header__back-button {
+    background: none;
+    border: 1px solid var(--light-border);
+    color: var(--text-medium);
+    padding: 10px; /* Botão de voltar um pouco maior */
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.2s, border-color 0.2s, transform 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-light); /* Sombra para o botão */
+}
+
+.header__back-button:hover {
+    background-color: var(--medium-gray);
+    border-color: var(--text-medium);
+    transform: translateX(-3px); /* Leve movimento no hover */
+}
+
+/* --- FORMULÁRIO GERAL --- */
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 25px; /* Mais espaço entre os cards */
+}
+
+.sectionCard {
+    background-color: var(--card-background);
+    padding: 30px; /* Mais padding dentro do card */
+    border-radius: 10px; /* Bordas mais arredondadas */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08); /* Sombra mais pronunciada */
+    border: none; /* Remove a borda padrão para confiar na sombra */
+}
+
+.sectionCard__title {
+    font-size: 1.4rem; /* Títulos de seção maiores */
+    color: var(--primary-orange);
+    margin-top: 0;
+    margin-bottom: 25px; /* Mais espaço abaixo do título da seção */
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--medium-gray);
+    position: relative; /* Para o pseudo-elemento */
+}
+
+/* Adiciona um detalhe de linha no título do card */
+.sectionCard__title::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -2px; /* Alinha com a borda inferior */
+    width: 60px; /* Largura da linha colorida */
+    height: 2px;
+    background-color: var(--primary-orange);
+}
+
+/* --- GRIDS DE FORMULÁRIO --- */
+.form__grid--cliente,
+.form__grid--pagamento {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Min-width maior para campos */
+    gap: 25px; /* Espaço entre campos do grid */
+}
+
+.section__grid-two-cols {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 30px; /* Espaço entre as duas colunas principais */
+}
+
+@media (min-width: 992px) { /* breakpoint maior para layout de 2 colunas */
+    .section__grid-two-cols {
+        grid-template-columns: 2fr 1.2fr; /* Coluna de itens mais larga */
+    }
+}
+
+/* --- GRUPOS DE INPUTS --- */
+.form__group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form__label {
+    display: block;
+    margin-bottom: 8px; /* Mais espaço entre label e input */
+    font-weight: 600;
+    color: var(--text-dark); /* Label mais escuro */
+    font-size: 0.95rem; /* Fonte um pouco maior */
+}
+
+.form__input,
+.form__select,
+.form__textarea {
+    width: 100%;
+    padding: 12px; /* Mais padding nos inputs */
+    border: 1px solid var(--light-border);
+    border-radius: 6px; /* Bordas mais arredondadas */
+    font-size: 1rem;
+    color: var(--text-dark);
+    background-color: var(--light-bg); /* Fundo leve para inputs */
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form__input::placeholder,
+.form__textarea::placeholder {
+    color: var(--text-medium); /* Placeholder mais visível */
+    opacity: 0.7;
+}
+
+
+.form__input:focus,
+.form__select:focus,
+.form__textarea:focus {
+    border-color: var(--primary-orange);
+    box-shadow: 0 0 0 3px var(--focus-shadow);
+    outline: none;
+    background-color: var(--card-background); /* Fundo branco no foco */
+}
+
+.form__textarea {
+    resize: vertical;
+    min-height: 80px; /* Altura mínima para textarea */
+}
+
+/* --- ITENS DA VENDA --- */
+.sectionCard__header-itens {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 15px; /* Mais padding */
+    border-bottom: 1px solid var(--medium-gray); /* Linha mais fina */
+    margin-bottom: 25px; /* Mais espaço */
+}
+
+/* Título secundário dentro do card de itens */
+.sectionCard__header-itens h4 {
+    font-size: 1.15rem;
+    color: var(--text-dark);
+    font-weight: 700;
+}
+
+
+.item__button--add {
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Mais espaço entre ícone e texto */
+    background-color: var(--success-green);
+    color: white;
+    padding: 10px 18px; /* Botão maior */
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: background-color 0.2s, transform 0.2s;
+    box-shadow: var(--shadow-light);
+}
+
+.item__button--add:hover {
+    background-color: #1e8b3e; /* Verde um pouco mais escuro */
+    transform: translateY(-2px);
+}
+
+.item__list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Mais espaço entre os itens */
+}
+
+.item__row {
+    display: grid;
+    grid-template-columns: 2fr 90px 110px 140px; /* Ajuste das colunas para melhor alinhamento */
+    gap: 15px; /* Mais espaço entre os campos do item */
+    padding: 15px;
+    background-color: var(--light-bg); /* Fundo leve para cada item */
+    border: 1px solid var(--light-border);
+    border-radius: 8px;
+    align-items: flex-end; /* Alinha labels na parte inferior */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03); /* Sombra sutil para cada item */
+}
+
+@media (max-width: 991px) { /* Ajuste para telas menores que o breakpoint de duas colunas */
+    .item__row {
+        grid-template-columns: 1fr 80px 100px; /* Itens em 3 colunas principais */
+        grid-template-areas:
+            "desc desc actions"
+            "qty value total";
+        gap: 15px;
+    }
+    .item__field--description { grid-area: desc; }
+    .item__field:nth-child(2) { grid-area: qty; } /* Quantidade */
+    .item__field:nth-child(3) { grid-area: value; } /* Valor Unitário */
+    .item__field--total-actions { grid-area: actions; /* Mudei para actions para alinhar com o botão de remover */ display: flex; flex-direction: column; align-items: flex-end; justify-content: space-between; gap: 5px;}
+    .item__total { width: 100%; } /* Ocupa a largura total na área actions */
+}
+
+@media (max-width: 575px) {
+    .item__row {
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas:
+            "desc desc"
+            "qty value"
+            "total actions";
+        align-items: stretch; /* Estica os campos para preencher */
+    }
+    .item__field--total-actions {
+        flex-direction: row; /* Volta para linha para o total e botão */
+        align-items: center;
+        justify-content: flex-end;
+        gap: 10px;
+        margin-top: 10px; /* Adiciona um espaço superior */
+    }
+    .item__total {
+        width: auto; /* Deixa o total se ajustar */
+    }
+}
+
+
+.item__label {
+    font-size: 0.85rem; /* Label um pouco maior */
+    color: var(--text-medium);
+    font-weight: 500;
+    margin-bottom: 6px; /* Mais espaço abaixo do label */
+}
+
+.item__field--total-actions {
+    display: flex;
+    align-items: flex-end; /* Alinha o botão de remover com o input */
+    gap: 12px;
+    min-width: 140px; /* Garante espaço mínimo */
+}
+
+.item__total {
+    flex-grow: 1;
+}
+
+.item__valueDisplay {
+    background-color: var(--medium-gray); /* Fundo mais claro para o display */
+    padding: 10px;
+    border-radius: 6px;
+    font-weight: 700;
+    color: var(--text-dark);
+    text-align: right;
+    font-size: 1.05rem;
+    min-height: 42px; /* Alinha com a altura dos inputs */
+    display: flex; /* Para centralizar verticalmente o texto */
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.item__button--remove {
+    background: none;
+    border: none;
+    color: var(--danger-red);
+    cursor: pointer;
+    padding: 8px; /* Padding ajustado */
+    border-radius: 50%; /* Botão redondo */
+    transition: background-color 0.2s, transform 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.item__button--remove:hover {
+    background-color: rgba(220, 53, 69, 0.15); /* Hover mais visível */
+    transform: scale(1.1); /* Leve crescimento no hover */
+}
+
+/* --- SUMÁRIO DE TOTAIS --- */
+.summary__group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px; /* Mais espaço entre as linhas do sumário */
+}
+
+.summary__row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px dotted var(--light-border); /* Linha pontilhada sutil */
+}
+
+.summary__row:last-of-type {
+    border-bottom: none; /* Remove a borda do último item (exceto o total final) */
+}
+
+.summary__rowFinal {
+    display: flex;
+    justify-content: space-between;
+    padding: 18px 0 0; /* Mais padding superior para o total final */
+    font-weight: 700;
+    border-top: 2px solid var(--primary-orange);
+    margin-top: 15px; /* Mais espaço acima do total final */
+}
+
+.summary__label,
+.summary__value {
+    font-size: 1rem;
+    color: var(--text-dark);
+}
+
+.summary__labelFinal {
+    font-size: 1.35rem; /* Total final maior */
+    color: var(--primary-orange);
+}
+
+.summary__valueFinal {
+    font-size: 1.55rem; /* Valor total final ainda maior */
+    color: var(--primary-orange);
+}
+
+/* --- BOTÕES DE AÇÃO DO FORMULÁRIO --- */
+.form__actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 20px; /* Mais espaço entre os botões */
+    padding-top: 25px; /* Mais padding superior */
+    border-top: 1px solid var(--medium-gray); /* Separador sutil */
+    margin-top: 10px;
+}
+
+.form__button--cancel,
+.form__button--submit {
+    padding: 14px 28px; /* Botões maiores */
+    border: none;
+    border-radius: 8px; /* Bordas mais arredondadas */
+    font-size: 1.05rem; /* Texto maior */
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.2s, box-shadow 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Mais espaço entre ícone e texto */
+    box-shadow: var(--shadow-light); /* Sombra padrão */
+}
+
+.form__button--cancel {
+    background-color: var(--text-medium);
+    color: white;
+}
+
+.form__button--cancel:hover {
+    background-color: #616e7a; /* Um tom mais escuro */
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.form__button--submit {
+    background-color: var(--primary-orange);
+    color: white;
+}
+
+.form__button--submit:hover:not(:disabled) {
+    background-color: #d46207;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(236, 111, 8, 0.3); /* Sombra colorida no hover */
+}
+
+.form__button--submit:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+}
+
+/* --- ÍCONES E LOADING SPINNER --- */
+.icon {
+    width: 26px; /* Ícones um pouco maiores */
+    height: 26px;
+}
+
+.iconSmall {
+    width: 20px;
+    height: 20px;
+}
+
+.spinner {
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-top: 3px solid #fff;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}

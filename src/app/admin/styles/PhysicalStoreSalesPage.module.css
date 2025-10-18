@@ -1,0 +1,460 @@
+.dashboardContainer {
+    margin-left: 15rem;
+    width: auto;
+    padding: 0;
+    min-height: 100vh;
+}
+
+.dashboardContainerWrapper {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0px 20px;
+}
+
+.dashboardHeader {
+    margin-bottom: 0.5rem;
+    padding: 0;
+}
+
+.pageTitle {
+    font-size: 2rem;
+    margin-top: 0;
+    margin-bottom: 0rem;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.pageSubtitle {
+    font-size: 1rem;
+    color: var(--text-muted, #7f8c8d);
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+}
+
+
+/* ================================
+  LOADER
+================================== */
+.loadingContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 16rem;
+}
+
+.spinner {
+    height: 2rem;
+    width: 2rem;
+    border-radius: 50%;
+    border-bottom: 2px solid var(--color-primary);
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* ================================
+  AÇÕES RÁPIDAS
+================================== */
+.actionsGrid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+@media (min-width: 768px) {
+    .actionsGrid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.actionCard {
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    color: white;
+    text-decoration: none;
+    transition: all 0.2s;
+    transform: scale(1);
+    box-shadow: var(--shadow-sm, 0 1px 2px rgba(0, 0, 0, 0.05));
+}
+
+.actionCard:hover {
+    transform: scale(1.02);
+    box-shadow: var(--shadow-md, 0 4px 15px rgba(0, 0, 0, 0.1));
+}
+
+.actionContent {
+    display: flex;
+    align-items: center;
+}
+
+.actionIcon {
+    height: 2rem;
+    width: 2rem;
+    margin-right: 1rem;
+}
+
+.actionTitle {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: white;
+    margin: 0;
+}
+
+.actionSubtitle {
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 0;
+}
+
+/* Cores dos Action Cards (Gradientes) */
+.actionCardBlue {
+    background: linear-gradient(to right, #42a5f5, #1976d2);
+}
+
+.actionCardBlue:hover {
+    background: linear-gradient(to right, #1976d2, #1565c0);
+}
+
+.actionCardOrange {
+    background: linear-gradient(to right, var(--color-primary, #ec6f08), #d96807);
+}
+
+.actionCardOrange:hover {
+    background: linear-gradient(to right, #d96807, var(--color-primary-dark, #cc5c07));
+}
+
+.actionCardGreen {
+    background: linear-gradient(to right, var(--color-success, #28a745), #1e8e3c);
+}
+
+.actionCardGreen:hover {
+    background: linear-gradient(to right, #1e8e3c, #106c35);
+}
+
+
+/* ================================
+  CARDS DE ESTATÍSTICAS
+================================== */
+.statsGrid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+@media (min-width: 768px) {
+    .statsGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .statsGrid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+.statCard {
+    background-color: var(--bg-card, #ffffff);
+    border-radius: 0.75rem;
+    box-shadow: var(--shadow-sm, 0 1px 2px rgba(0, 0, 0, 0.05));
+    padding: 1.5rem;
+    border: 1px solid var(--border-color, #e9ecef);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.statLabel {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-muted, #7f8c8d);
+}
+
+.statValue {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-heading, #2c3e50);
+    margin-top: 0.25rem;
+    margin-bottom: 0;
+}
+
+.statIconBox {
+    height: 3rem;
+    width: 3rem;
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon {
+    height: 1.5rem;
+    width: 1.5rem;
+}
+
+/* Cores dos Ícones (Utilizando cores fixas que complementam as variáveis) */
+.iconBlue {
+    background-color: #e0f7fa;
+}
+
+/* Vendas Hoje */
+.iconBlue .icon {
+    color: #00bcd4;
+}
+
+.iconGreen {
+    background-color: #e8f5e9;
+}
+
+/* Faturamento Hoje */
+.iconGreen .icon {
+    color: var(--color-success, #28a745);
+}
+
+.iconOrange {
+    background-color: #fff3e0;
+}
+
+/* OS em Andamento */
+.iconOrange .icon {
+    color: var(--color-primary, #ec6f08);
+}
+
+.iconRed {
+    background-color: #ffebee;
+}
+
+/* Alertas de Estoque */
+.iconRed .icon {
+    color: var(--color-danger, #dc3545);
+}
+
+
+/* ================================
+  SEÇÕES DE DADOS (VENDAS/OS)
+================================== */
+.dataGrid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 1.5rem;
+}
+
+@media (min-width: 1024px) {
+    .dataGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.dataSection,
+.dataSectionFull {
+    background-color: var(--bg-card, #ffffff);
+    border-radius: 0.75rem;
+    box-shadow: var(--shadow-sm, 0 1px 2px rgba(0, 0, 0, 0.05));
+    border: 1px solid var(--border-color, #e9ecef);
+}
+
+.dataSectionFull {
+    grid-column: 1 / -1;
+}
+
+.dataHeader {
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--border-color, #e9ecef);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.dataTitle {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--text-heading, #2c3e50);
+    margin: 0;
+}
+
+.dataLink {
+    font-size: 0.875rem;
+    color: var(--color-primary, #ec6f08);
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.dataLink:hover {
+    color: var(--color-primary-dark, #cc5c07);
+}
+
+.dataBody {
+    padding: 1.5rem;
+}
+
+.emptyMessage {
+    color: var(--text-muted, #7f8c8d);
+    text-align: center;
+    padding: 1rem 0;
+}
+
+/* Listas (Vendas e OS) */
+.list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.listItem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem;
+    background-color: var(--bg-light, #f8f9fa);
+    border-radius: 0.5rem;
+}
+
+.listPrimaryText {
+    font-weight: 500;
+    color: var(--text-body, #343a40);
+    margin: 0;
+}
+
+.listSecondaryText {
+    font-size: 0.875rem;
+    color: var(--text-muted, #7f8c8d);
+    margin: 0;
+}
+
+.listDateText {
+    font-size: 0.75rem;
+    color: var(--text-muted, #7f8c8d);
+    margin-top: 0.125rem;
+    margin-bottom: 0;
+}
+
+.listRightContent {
+    text-align: right;
+}
+
+/* Badges de Status */
+.badge {
+    display: inline-flex;
+    padding: 0.125rem 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    border-radius: 9999px;
+    margin-top: 0.25rem;
+    text-transform: uppercase;
+    white-space: nowrap;
+    /* Impede quebras de linha */
+}
+
+/* Cores do Status de OS (Manutenções) */
+/* As cores de fundo devem ser bem claras (ex: 50 ou 100) e o texto mais escuro (ex: 700) */
+.status-aguardando {
+    background-color: #fffde7;
+    color: #f9a825;
+}
+
+.status-andamento {
+    background-color: #e3f2fd;
+    color: #1976d2;
+}
+
+.status-peca {
+    background-color: #fff3e0;
+    color: #f57f17;
+}
+
+.status-pronto {
+    background-color: #e8f5e9;
+    color: var(--color-success, #28a745);
+}
+
+.status-default {
+    background-color: var(--border-color, #e9ecef);
+    color: var(--text-body, #343a40);
+}
+
+/* Cores do Status de Pagamento */
+.payment-pago {
+    background-color: #e8f5e9;
+    color: var(--color-success, #28a745);
+}
+
+.payment-pendente {
+    background-color: #fffde7;
+    color: var(--color-warning, #ffc107);
+}
+
+.payment-parcial {
+    background-color: #fff3e0;
+    color: #d96807;
+}
+
+.payment-cancelado {
+    background-color: #ffebee;
+    color: var(--color-danger, #dc3545);
+}
+
+.payment-default {
+    background-color: var(--border-color, #e9ecef);
+    color: var(--text-muted, #7f8c8d);
+}
+
+
+/* ================================
+  ALERTAS DE ESTOQUE
+================================== */
+.alertTitle {
+    display: flex;
+    align-items: center;
+}
+
+.alertIcon {
+    height: 1.25rem;
+    width: 1.25rem;
+    color: var(--color-danger, #dc3545);
+    margin-right: 0.5rem;
+}
+
+.stockAlertGrid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 1rem;
+}
+
+@media (min-width: 768px) {
+    .stockAlertGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .stockAlertGrid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.stockAlertCard {
+    padding: 1rem;
+    background-color: #ffebee;
+    border: 1px solid #ffcdd2;
+    border-radius: 0.5rem;
+}
+
+.stockAlertContent {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.stockAlertValue {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-danger, #dc3545);
+    margin: 0;
+}

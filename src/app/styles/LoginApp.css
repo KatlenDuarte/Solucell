@@ -1,0 +1,231 @@
+/* === CONTAINER PRINCIPAL === */
+.login-container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(160deg, #0f172a, #1e293b);
+  padding: 20px;
+  font-family: "Inter", "Arial", sans-serif;
+}
+
+/* === CAIXA CENTRAL === */
+.login-box {
+  width: 100%;
+  max-width: 400px;
+  background-color: #1f2937;
+  padding: 40px 30px;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+  border: 1px solid #374151;
+  text-align: center;
+  animation: fadeIn 0.4s ease-in-out;
+}
+
+/* === CABEÇALHO === */
+.login-header {
+  margin-bottom: 25px;
+}
+
+.login-logo {
+  width: 120px;
+  height: auto;
+  margin-bottom: 15px;
+}
+
+.login-header h2 {
+  font-size: 1rem;
+  color: #ffffff;
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+
+.login-header p {
+  font-size: 0.9rem;
+  color: #9ca3af;
+}
+
+/* === LOGIN SOCIAL === */
+.social-login {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.social-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 10px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+  border: none;
+}
+
+.social-button.google {
+  background-color: #ffffff;
+  color: #333;
+}
+
+.social-button.facebook {
+  background-color: #1877f2;
+  color: #ffffff;
+}
+
+.social-button:hover {
+  transform: translateY(-2px);
+  opacity: 0.95;
+}
+
+/* === DIVISOR === */
+.divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #9ca3af;
+  font-size: 0.85rem;
+  margin: 20px 0;
+  position: relative;
+}
+
+.divider::before,
+.divider::after {
+  content: "";
+  position: absolute;
+  width: 40%;
+  height: 1px;
+  background-color: #374151;
+}
+
+.divider::before {
+  left: 0;
+}
+
+.divider::after {
+  right: 0;
+}
+
+/* === FORMULÁRIO === */
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.input-group {
+  display: flex;
+  align-items: center;
+  background-color: #374151;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #4b5563;
+  transition: border 0.3s, box-shadow 0.3s;
+}
+
+.input-group:focus-within {
+  border-color: #f97316;
+  box-shadow: 0 0 0 2px rgba(249, 115, 22, 0.3);
+}
+
+.input-group .icon {
+  margin-right: 10px;
+  color: #9ca3af;
+}
+
+.input-group input {
+  flex-grow: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: #ffffff;
+  font-size: 14px;
+}
+
+/* === MENSAGENS === */
+.error {
+  color: #f87171;
+  font-size: 13px;
+  margin-top: -5px;
+}
+
+.success {
+  color: #4ade80;
+  font-size: 13px;
+  font-weight: 600;
+  margin-top: -5px;
+}
+
+/* === BOTÃO PRINCIPAL === */
+.login-form button {
+  background-color: #f97316;
+  color: #fff;
+  font-weight: 600;
+  padding: 12px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.login-form button:hover:not(:disabled) {
+  background-color: #ea580c;
+  transform: translateY(-1px);
+}
+
+.login-form button:disabled {
+  background-color: #6b7280;
+  cursor: not-allowed;
+}
+
+/* === RODAPÉ === */
+.login-footer {
+  margin-top: 25px;
+  font-size: 14px;
+  color: #9ca3af;
+}
+
+.login-footer a {
+  color: #f97316;
+  margin-left: 5px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s, text-decoration 0.3s;
+}
+
+.login-footer a:hover {
+  color: #fb923c;
+  text-decoration: underline;
+}
+
+/* === ANIMAÇÃO === */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.forgot-password {
+  text-align: right;
+}
+
+.forgot-password a {
+  color: #999;
+  font-size: 14px;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.forgot-password a:hover {
+  color: #fb923c;
+  text-decoration: underline;
+}

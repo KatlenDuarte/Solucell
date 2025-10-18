@@ -1,0 +1,410 @@
+/* =======================================
+   PALETA DE CORES (Dark Mode Suave)
+   ======================================= */
+/* Header/Fundo Principal: #1E293B */
+/* Texto Claro: #F1F5F9 */
+/* Destaque (Azul): #3B82F6 */
+/* Subcategoria Fundo/Menu Mobile: #171E2B (Mais escuro para contraste) */
+/* Borda/Separador: #475569 */
+/* Badge: #EF4444 (Vermelho) */
+
+.header {
+    background-color: #1E293B;
+    color: #F1F5F9;
+    padding: 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+}
+
+.container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+/* =======================================
+   MAIN CONTENT & LOGO
+   ======================================= */
+.mainContent {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 4.5rem; /* Altura do header principal */
+}
+
+.logoLink {
+    display: flex;
+    align-items: center;
+}
+
+.logoImage {
+    height: 28px; /* Altura do logo */
+    width: auto;
+}
+
+/* =======================================
+   BARRA DE BUSCA
+   ======================================= */
+.searchDesktop {
+    flex-grow: 1;
+    max-width: 600px;
+    margin: 0 2rem;
+    display: none; /* Escondido por padrão (mobile) */
+}
+
+@media (min-width: 1024px) {
+    .searchDesktop {
+        display: block; /* Visível no desktop */
+    }
+}
+
+.searchMobile {
+    width: 100%;
+    padding: 0.75rem 0;
+    display: block; /* Visível por padrão (mobile/tablet) */
+}
+
+@media (min-width: 1024px) {
+    .searchMobile {
+        display: none; /* Escondido no desktop */
+    }
+}
+
+.searchForm {
+    width: 100%;
+}
+
+.searchWrapper {
+    display: flex;
+    background-color: #2D3748;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    border: 1px solid #475569;
+}
+
+.searchInput {
+    flex-grow: 1;
+    border: none;
+    padding: 0.6rem 1rem;
+    font-size: 1rem;
+    background-color: transparent;
+    color: #F1F5F9;
+}
+
+.searchInput::placeholder {
+    color: #94A3B8;
+}
+
+.searchButton {
+    background-color: #3B82F6;
+    color: #fff;
+    border: none;
+    padding: 0 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.searchButton:hover {
+    background-color: #2563EB;
+}
+
+/* =======================================
+   AÇÕES & ÍCONES (Desktop)
+   ======================================= */
+.actionsDesktop {
+    display: none; /* Escondido por padrão (mobile) */
+    align-items: center;
+    gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+    .actionsDesktop {
+        display: flex; /* Visível no Tablet e Desktop */
+    }
+}
+
+.actionLink {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: #F1F5F9;
+    transition: color 0.2s;
+    position: relative;
+    padding: 0.5rem 0;
+}
+
+.actionLink:hover {
+    color: #3B82F6;
+}
+
+.actionText {
+    font-size: 0.75rem;
+    margin-top: 0.2rem;
+    white-space: nowrap;
+}
+
+/* Badge do Carrinho Desktop */
+.cartBadge {
+    position: absolute;
+    top: -4px;
+    right: -10px;
+    background-color: #EF4444;
+    color: #fff;
+    border-radius: 9999px;
+    padding: 1px 6px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    line-height: 1;
+}
+
+/* =======================================
+   SUBCATEGORIAS (Desktop Navigation)
+   ======================================= */
+.subCategoryNav {
+    display: none;
+    background-color: #171E2B; 
+    padding: 0.5rem 1.5rem;
+    border-top: 1px solid #2D3748;
+}
+
+@media (min-width: 1024px) {
+    .subCategoryNav {
+        display: flex;
+        justify-content: center;
+        gap: 2.5rem;
+    }
+}
+
+.subCategoryLink {
+    display: flex;
+    align-items: center;
+    color: #94A3B8;
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 600;
+    padding: 0.5rem 0;
+    transition: color 0.2s;
+}
+
+.subCategoryLink:hover {
+    color: #3B82F6;
+}
+
+.subCategoryIcon {
+    margin-right: 0.5rem;
+}
+
+/* =======================================
+   AÇÕES MOBILE (Carrinho & Menu)
+   ======================================= */
+.actionsMobile {
+    display: flex; /* Visível por padrão (Mobile/Tablet) */
+    align-items: center;
+    gap: 1rem;
+}
+
+@media (min-width: 768px) {
+    /* Oculta no Tablet/Desktop, pois o actionsDesktop assume */
+    .actionsMobile {
+        display: none;
+    }
+}
+
+/* Estilo do Carrinho Mobile (ícone + badge) */
+.cartMobileLink {
+    position: relative;
+    color: #F1F5F9;
+    text-decoration: none;
+    padding: 0.5rem;
+}
+
+/* Badge do Carrinho Mobile */
+.cartBadgeMobile {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    background-color: #EF4444;
+    color: #fff;
+    border-radius: 9999px;
+    padding: 1px 6px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.menuButton {
+    background: none;
+    border: none;
+    color: #F1F5F9;
+    cursor: pointer;
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    transition: color 0.2s;
+}
+
+.menuButton:hover {
+    color: #3B82F6;
+}
+
+/* =======================================
+   MENU MOBILE EXPANDIDO
+   ======================================= */
+.mobileMenu {
+    position: absolute;
+    top: 4.5rem; /* Abaixo do mainContent */
+    left: 0;
+    width: 100%;
+    background-color: #171E2B;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.5);
+    z-index: 40;
+    padding-bottom: 1rem;
+}
+
+.mobileMenuContent {
+    display: flex;
+    flex-direction: column;
+    padding: 0 1.5rem;
+}
+
+.mobileMenuItem {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.8rem 0;
+    border-bottom: 1px solid #2D3748;
+    color: #F1F5F9;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: color 0.2s, background-color 0.2s;
+}
+
+.mobileMenuItem:hover {
+    color: #3B82F6;
+    background-color: #1E293B;
+    padding-left: 0.5rem;
+}
+
+.mobileMenuItem:last-child {
+    border-bottom: none;
+}
+
+.mobileDivider {
+    height: 1px;
+    background-color: #2D3748;
+    margin: 0.5rem 0;
+}
+
+/* =======================================
+  CTA SECTION - REFINADO E MULTI-LOJA
+======================================= */
+
+/* Estilo para a seção inteira */
+.ctaSection {
+    background: linear-gradient(135deg, #e96b17ff, #954bacbe); 
+    padding: 64px 0;
+    text-align: center;
+}
+
+/* Container para centralizar o conteúdo */
+.ctaContainer {
+    max-width: 900px; /* Aumentei um pouco para caber os 2 endereços */
+    margin: 0 auto;
+    padding: 0 16px;
+}
+
+/* Título Principal */
+.ctaTitleStore {
+    font-size: 2.5rem;
+    font-weight: 800; 
+    color: white;
+    margin-bottom: 32px;
+    font-size: clamp(2rem, 6vw, 2.5rem);
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3); 
+}
+
+/* Container de Lista de Endereços (Novo) */
+.addressList {
+    display: flex;
+    justify-content: center;
+    gap: 32px; /* Espaço entre os dois blocos de endereço */
+    margin-bottom: 40px;
+    /* Adaptação para telas menores */
+    flex-wrap: wrap; 
+}
+
+/* Item de Endereço Individual (Novo) */
+.addressItem {
+    background-color: rgba(255, 255, 255, 0.1); /* Fundo sutil transparente */
+    padding: 20px;
+    border-radius: 8px;
+    flex: 1 1 300px; /* Flexível, mas não menor que 300px */
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.addressItem h3 {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: #ffd700; /* Destaque em dourado/amarelo */
+    margin-bottom: 8px;
+}
+
+.addressItem p {
+    font-size: 0.95rem;
+    color: #f1f5f9;
+    line-height: 1.4;
+    margin: 4px 0;
+}
+
+
+/* =======================================
+  ESTILOS DO MAPA
+======================================= */
+
+/* Container que envolve o iframe */
+.mapContainer {
+    position: relative;
+    padding-bottom: 56.25%; /* Proporção 16:9 (mais cinematográfica) */
+    height: 0;
+    overflow: hidden;
+    margin: 0 auto 32px auto; /* Espaço antes do botão */
+    max-width: 750px; 
+    border-radius: 12px; 
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4); 
+    border: 4px solid white; /* Borda branca para destacar */
+}
+
+/* O Iframe (o mapa) */
+.mapIframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+/* Novo estilo para o botão/link do Mapa */
+.ctaButtonMap {
+    background-color: #df8218; 
+    color: white; 
+    border: none;
+    padding: 14px 28px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+    text-decoration: none; 
+    display: inline-block;
+}
+
+.ctaButtonMap:hover {
+    background-color: #059669; 
+    transform: translateY(-2px);
+}

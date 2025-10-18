@@ -1,0 +1,41 @@
+/* =======================================
+   FOOTER
+======================================= */
+.footer {
+    background-color: #1E293B; /* mesmo tom do header */
+    color: #F1F5F9;
+    padding: 3rem 1.5rem;
+    font-family: 'Inter', sans-serif;
+}
+
+.footerContainer {
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+.footerGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.footerGrid h3 {
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    font-size: 1rem;
+}
+
+.footerGrid p {
+    color: #94A3B8;
+    font-size: 0.875rem;
+    margin: 0.25rem 0;
+}
+
+.footerBottom {
+    border-top: 1px solid #475569;
+    padding-top: 1.5rem;
+    text-align: center;
+    color: #94A3B8;
+    font-size: 0.875rem;
+}

@@ -1,0 +1,149 @@
+/* Container Principal: Centraliza o formulário na tela */
+.loginPageContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    /* Fundo Escuro */
+    background-color: #121212; 
+    padding: 20px;
+}
+
+/* Caixa de Login: Onde o conteúdo está */
+.loginBox {
+    width: 100%;
+    max-width: 400px;
+    /* Fundo do Card */
+    background: #1e1e1e; 
+    padding: 40px;
+    border-radius: 12px;
+    /* Sombra mais sutil em tema escuro */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    /* Borda sutil para separar do fundo */
+    border: 1px solid #2e2e2e; 
+}
+
+/* Cabeçalho */
+.header {
+    margin-bottom: 30px;
+}
+
+/* Estilo para a imagem do logo (se estiver usando a tag <img>) */
+.logo {
+    max-width: 150px; 
+    height: auto;
+    margin-bottom: 15px;
+    /* Pode ser necessário usar 'filter: invert(1)' se o seu logo for preto */
+}
+
+.title {
+    font-size: 1.8rem;
+    /* Cor do Título (Claro) */
+    color: #f0f0f0; 
+    margin: 0 0 5px 0;
+}
+
+.subtitle {
+    font-size: 0.95rem;
+    /* Cor do Subtítulo (Cinza Claro) */
+    color: #a0a0a0; 
+}
+
+/* Formulário */
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Grupos de Input com Ícones */
+.inputGroup {
+    display: flex;
+    align-items: center;
+    /* Borda do Input */
+    border: 1px solid #3a3a3a;
+    border-radius: 8px;
+    padding: 10px 15px;
+    /* Fundo do Input */
+    background-color: #2a2a2a;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.inputGroup:focus-within {
+    /* Cor de foco (Azul Principal) */
+    border-color: #3b82f6; 
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+}
+
+.inputIcon {
+    /* Cor do Ícone */
+    color: #888888; 
+    margin-right: 10px;
+}
+
+.input {
+    flex-grow: 1;
+    border: none;
+    outline: none;
+    font-size: 1rem;
+    /* Cor do Texto do Input */
+    color: #f0f0f0; 
+    background: transparent;
+    padding: 0;
+}
+
+/* Botão de Login */
+.loginButton {
+    background-color: #e47419; /* Azul Principal */
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s, opacity 0.3s;
+}
+
+.loginButton:hover:not(:disabled) {
+    background-color: #e47419; /* Azul mais escuro no hover */
+}
+
+.loginButton:disabled {
+    background-color: #5c7c9c; /* Cor desabilitada (suave no dark mode) */
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+/* Mensagem de Erro */
+.error {
+    color: #ef4444; /* Vermelho para erro */
+    font-size: 0.875rem;
+    margin: -5px 0 10px 0;
+}
+
+/* Rodapé (links e texto de cadastro) */
+.footer {
+    margin-top: 25px;
+    font-size: 0.9rem;
+}
+
+.link {
+    color: #e47419;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.link:hover {
+    color: #60a5fa; /* Azul mais claro no hover */
+    text-decoration: underline;
+}
+
+.registerText {
+    margin-top: 10px;
+    /* Cor do texto do rodapé */
+    color: #a0a0a0; 
+}
+

@@ -1,0 +1,381 @@
+.dashboardWrapper {
+    padding: 0px 50px;
+    background-color: var(--light-gray);
+    min-height: calc(100vh - 80px);
+    width: calc(93vw - 16rem);
+    margin-left: 14rem;
+}
+
+.loadingContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 256px;
+}
+
+.spinner {
+    animation: spin 1s linear infinite;
+    border-radius: 50%;
+    height: 2rem;
+    width: 2rem;
+    border-bottom: 3px solid var(--primary-blue);
+    border-top: 3px solid transparent;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Header */
+.header {
+    margin-bottom: 20px;
+}
+
+.title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin: 0;
+    padding: 0;
+    color: var(--dark-gray-text);
+}
+
+.subtitle {
+    color: var(--body-text);
+    font-size: 1rem;
+    margin: 0;
+    padding: 0;
+}
+
+/* ---------------------------------- */
+/* Stats Cards */
+/* ---------------------------------- */
+.statsGrid {
+    display: grid;
+    gap: 15px;
+    margin-bottom: 30px;
+    grid-template-columns: repeat(1, 1fr);
+}
+
+@media (min-width: 640px) {
+    .statsGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .statsGrid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+.card {
+    background-color: var(--card-background);
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--medium-gray);
+    padding: 14px 24px;
+}
+
+.cardContent {
+    display: flex;
+    align-items: center;
+}
+
+.iconBg {
+    padding: 12px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.textGroup {
+    margin-left: 16px;
+}
+
+.cardLabel {
+    font-size: 0.9rem;
+    color: var(--body-text);
+    margin-bottom: 0px;
+    padding: 0;
+}
+
+.cardValue {
+    font-size: 20px;
+    font-weight: 600;
+    padding: 0;
+    margin-top: 5px;
+    color: var(--dark-gray-text);
+}
+
+/* Cores dos Ícones (Usando a paleta global) */
+.iconBlue {
+    background-color: rgba(212, 125, 53, 0.15);
+    color: var(--primary-blue);
+}
+
+.iconGreen {
+    background-color: rgba(40, 167, 69, 0.15);
+    color: var(--coerence-green);
+}
+
+.iconYellow {
+    background-color: rgba(236, 111, 8, 0.15);
+    color: var(--primary-orange);
+}
+
+.iconPurple {
+    background-color: rgba(212, 125, 53, 0.15); 
+    color: var(--primary-blue);
+}
+
+/* ---------------------------------- */
+/* Produtos Recentes e Ações */
+/* ---------------------------------- */
+.mainGrid {
+    display: grid;
+    gap: 32px;
+    grid-template-columns: repeat(1, 1fr);
+}
+
+@media (min-width: 1024px) {
+    .mainGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.listContainer {
+    background-color: var(--card-background);
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--medium-gray);
+}
+
+.listHeader {
+    padding: 24px;
+    border-bottom: 1px solid var(--medium-gray);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.listTitle {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--dark-gray-text);
+}
+
+.viewAllButton {
+    color: var(--primary-blue);
+    font-size: 0.9rem;
+    font-weight: 500;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: color 0.2s;
+}
+
+.viewAllButton:hover {
+    color: var(--primary-orange);
+}
+
+.listBody {
+    padding: 24px; 
+}
+
+.emptyState {
+    text-align: center;
+    padding: 32px 0;
+}
+
+.emptyIcon {
+    margin: 0 auto 16px;
+    color: var(--medium-gray);
+}
+
+.emptyText {
+    color: var(--body-text);
+}
+
+.addButton {
+    margin-top: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-left: auto;
+    margin-right: auto;
+    color: var(--primary-blue);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+    padding: 0;
+    transition: color 0.2s;
+}
+
+.addButton:hover {
+    color: var(--primary-orange);
+}
+
+.productList {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.productItem {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 8px 0;
+}
+
+.productImage {
+    width: 48px;
+    height: 48px;
+    border-radius: 8px;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.productInfo {
+    flex-grow: 1;
+    min-width: 0;
+}
+
+.productName {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--dark-gray-text);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.productDetails {
+    font-size: 0.85rem;
+    color: var(--body-text);
+}
+
+.productMetrics {
+    text-align: right;
+    flex-shrink: 0;
+}
+
+.productQuantity {
+    color: var(--dark-gray-text);
+    font-size: 0.9rem;
+    margin-bottom: 4px;
+}
+
+.statusBadge {
+    display: inline-flex;
+    padding: 4px 8px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border-radius: 50px;
+}
+
+.statusAvailable {
+    background-color: var(--secondary-green);
+    color: white;
+}
+
+.statusUnavailable {
+    background-color: var(--danger-red);
+    color: white;
+}
+
+.quickActionsList {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.actionButton {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px;
+    border: 1px solid var(--medium-gray);
+    border-radius: 8px;
+    background-color: var(--card-background);
+    text-align: left;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.actionButton:hover {
+    background-color: var(--light-gray);
+    border-color: var(--primary-orange);
+}
+
+.actionIconBg {
+    padding: 8px;
+    border-radius: 8px;
+    flex-shrink: 0;
+}
+
+.actionText {
+    text-align: left;
+}
+
+.actionTitle {
+    font-weight: 500;
+    color: var(--dark-gray-text);
+}
+
+.actionSubtitle {
+    font-size: 0.85rem;
+    color: var(--body-text);
+}
+
+/* ---------------------------------- */
+/* Welcome Banner */
+/* ---------------------------------- */
+.welcomeBanner {
+    margin-top: 32px;
+    background: linear-gradient(to right, var(--primary-orange), var(--primary-blue));
+    border-radius: 8px;
+    padding: 24px;
+    color: var(--card-background);
+}
+
+.welcomeContent {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.welcomeTitle {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.welcomeText {
+    color: rgba(255, 255, 255, 0.85);
+    max-width: 80%;
+}
+
+.welcomeIconWrapper {
+    display: none;
+    flex-shrink: 0;
+}
+
+@media (min-width: 640px) {
+    .welcomeIconWrapper {
+        display: block;
+    }
+}
+
+.welcomeIcon {
+    color: rgba(255, 255, 255, 0.6);
+}

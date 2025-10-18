@@ -1,0 +1,439 @@
+/* Altura padrão para ícones */
+.w4H4 {
+    width: 1rem;
+    height: 1rem;
+}
+
+.w5H5 {
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+.w6H6 {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+/* Base do Header */
+.header {
+    background-color: #1f2937;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 50;
+}
+
+.container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+@media (min-width: 640px) {
+    .container {
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .container {
+        padding-left: 2rem;
+        padding-right: 2rem;
+    }
+}
+
+/* Seções de Conteúdo */
+.mainContent {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+.logoGroup {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    height: 3rem;
+    width: auto;
+    object-fit: contain;
+}
+
+/* Busca Desktop */
+.searchDesktopWrapper {
+    display: none;
+    flex: 1;
+    max-width: 32rem;
+    margin-left: 0rem;
+    margin-right: 1rem;
+}
+
+@media (min-width: 1024px) {
+    .searchDesktopWrapper {
+        display: flex;
+    }
+}
+
+.searchInputGroup {
+    position: relative;
+    width: 100%;
+    transition: all 0.3s ease;
+}
+
+.searchFocused {
+    transform: scale(1.01);
+}
+
+.searchInput {
+    width: 100%;
+    padding: 0.75rem 1rem; 
+    padding-right: 6rem; 
+    border: 2px solid #374151;
+    border-radius: 0.75rem;
+    background-color: #374151;
+    color: #f3f4f6;
+    transition: border-color 0.3s;
+}
+
+.searchInput::placeholder {
+    color: #9ca3af;
+}
+
+.searchInput:focus {
+    border-color: #ea580c;
+    outline: none;
+}
+
+.searchButton {
+    position: absolute;
+    right: 0.375rem; 
+    top: 50%;
+    transform: translateY(-50%);
+    background: linear-gradient(135deg, #f6953b, #eb5d25);
+    color: #ffffff;
+    padding: 0.375rem 1rem;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    height: calc(100% - 0.75rem); 
+    box-sizing: border-box; 
+}
+
+.userActions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.actionItem {
+    position: relative;
+    cursor: pointer;
+    color: #f3f4f6;
+    transition: color 0.2s;
+    display: flex;
+    align-items: center;
+}
+
+.hideOnTablet {
+    display: none;
+}
+
+@media (min-width: 1024px) {
+    .hideOnTablet {
+        display: flex;
+    }
+}
+
+.hiddenMdText {
+    display: none;
+}
+
+@media (min-width: 768px) {
+    .hiddenMdText {
+        display: block;
+    }
+}
+
+.actionTextSmall {
+    font-size: 0.75rem;
+    color: #9ca3af;
+    line-height: 1;
+}
+
+.actionTextMedium {
+    font-size: 0.875rem;
+    font-weight: 500;
+    line-height: 1;
+}
+
+/* Wishlist */
+.wishlistIcon {
+    width: 1.5rem;
+    height: 1.5rem;
+    color: #f3f4f6;
+    transition: color 0.2s;
+}
+
+.wishlistAction:hover .wishlistIcon {
+    color: #f87171;
+}
+
+.badge {
+    position: absolute;
+    top: -0.5rem;
+    right: -0.5rem;
+    color: #ffffff;
+    font-size: 0.75rem;
+    border-radius: 9999px;
+    width: 1.25rem;
+    height: 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}
+
+.badgeRed {
+    background-color: #ef4444;
+}
+
+/* Carrinho */
+.cartButton {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: linear-gradient(135deg, #f6953b, #eb5d25);
+    color: #ffffff;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+}
+
+.cartButton:hover {
+    background-image: linear-gradient(to right, #c2410c, #9a3412);
+}
+
+.actionTextBold {
+    font-size: 0.875rem;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.hiddenSmText {
+    display: none;
+}
+
+@media (min-width: 640px) {
+    .hiddenSmText {
+        display: block;
+    }
+}
+
+/* Toggle Menu Mobile */
+.menuToggleButton {
+    display: block;
+    padding: 0.5rem;
+    border-radius: 0.375rem;
+    color: #f3f4f6;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.menuToggleButton:hover {
+    color: #ea580c;
+    background-color: #374151;
+}
+
+@media (min-width: 1024px) {
+    .menuToggleButton {
+        display: none;
+    }
+}
+
+/* Busca Mobile */
+.searchMobileWrapper {
+    display: block;
+    padding-bottom: 1rem;
+    margin: 0;
+}
+
+@media (min-width: 1024px) {
+    .searchMobileWrapper {
+        display: none;
+    }
+}
+
+.searchInputGroupMobile {
+    position: relative;
+}
+
+.searchInputMobile {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.75rem 1rem;
+    padding-left: 3rem;
+    border: 2px solid #374151;
+    border-radius: 0.75rem;
+    background-color: #374151;
+    color: #f3f4f6;
+    transition: border-color 0.3s;
+}
+
+.searchInputMobile:focus {
+    border-color: #ea580c;
+    outline: none;
+}
+
+.searchIconMobile {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1.25rem;
+    height: 1.25rem;
+    color: #9ca3af;
+}
+
+/* Navegação Desktop */
+.navBarWrapper {
+    border-top: 1px solid #374151;
+}
+
+.navMenu {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+@media (min-width: 1024px) {
+    .navMenu {
+        display: flex;
+    }
+}
+
+.navLink,
+.navLinkDropdown {
+    color: #f3f4f6;
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.navLink:hover,
+.navLinkDropdown:hover {
+    color: #ea580c;
+}
+
+.navLinkHighlightRed {
+    color: #f87171;
+    font-weight: 700;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.navLinkHighlightRed:hover {
+    color: #ef4444;
+}
+
+.navLinkHighlightPurple {
+    color: #d8b4fe;
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.navLinkHighlightPurple:hover {
+    color: #a78bfa;
+}
+
+.mobileMenuOverlay {
+    background-color: #1f2937;
+    position: fixed;
+    top: 5rem; 
+    left: 0;
+    right: 0;
+    height: calc(100vh - 7rem); 
+    overflow-y: auto;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+    border-top: 1px solid #374151;
+    z-index: 40;
+}
+
+@media (min-width: 1024px) {
+    .mobileMenuOverlay {
+        display: none;
+    }
+}
+
+.mobileNavContent {
+    padding: 1rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    align-items: stretch;
+}
+
+.mobileNavItem {
+    display: flex; 
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 0;
+    color: #f3f4f6;
+    font-weight: 500;
+    text-decoration: none;
+    border-bottom: 1px solid #374151;
+    transition: color 0.2s;
+}
+
+.mobileNavItem:hover {
+    color: #ea580c;
+}
+
+.mobileNavHighlight {
+    color: #f87171;
+    font-weight: 700;
+}
+
+/* Ações de Conta Mobile (Alinhado à esquerda) */
+.mobileAccountActions {
+    padding-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: flex-start; 
+}
+
+.mobileAccountButton {
+    width: 100%;
+    background-image: linear-gradient(to right, #ea580c, #c2410c);
+    color: #ffffff;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.mobileAccountButton:hover {
+    opacity: 0.9;
+}
