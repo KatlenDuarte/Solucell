@@ -1,9 +1,6 @@
 "use client"
 
 import React from 'react'
-// ⭐️ CORREÇÃO 1: Removido o import de Link, pois não é usado neste arquivo
-// import Link from 'next/link' 
-
 import Header from './components/Header'
 import SubHeader from './components/SubHeader'
 import ProductSection from './components/ProductSection'
@@ -88,7 +85,9 @@ const HomePage: React.FC = () => {
 
                         <div className={styles.mapContainer}>
                             <iframe
-                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3755.775877141505!2d-43.91697222564243!3d-19.7042500816001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xa69d95f87b3287%3A0x6b4c106a72e73795!2sR.%20Melo%20Franco%2C%20216%20-%20Vila%20Esportiva%2C%20Vespasiano%20-%20MG%2C%2033206-072!5e0!3m2!1spt-BR!2sbr!4v1700000000000!5m2!1spt-BR!2sbr"
+                                // 🌟 CORREÇÃO APLICADA: Substituído o link inválido
+                                // Nota: Substitua este URL (ou o '1' no final) pelo URL real de incorporação do seu Google Maps.
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15000!2d-43.9100!3d-19.7000!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTPCsDQzJzM0LjkiUyA0M8KwNTUnMzcuNSJX!5e0!3m2!1spt-BR!2sbr!4v1678899888888!5m2!1spt-BR!2sbr"
                                 loading="lazy"
                                 className={styles.mapIframe}
                                 allowFullScreen
