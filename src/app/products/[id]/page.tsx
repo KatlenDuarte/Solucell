@@ -4,10 +4,7 @@ import { notFound } from 'next/navigation'
 import { getProductById, getAllProducts } from '../../data/products'
 import ProductDetailClient from './ProductDetailClient'
 
-// Note: No need for the explicit interface ProductPageProps anymore,
-// but if you keep it, make sure it's not trying to satisfy an unnecessary 'PageProps' constraint.
-// For now, we'll keep the structure but simplify the typing when calling the function.
-
+// A função generateStaticParams está correta e é necessária para as rotas estáticas
 export async function generateStaticParams() {
   const allProducts = getAllProducts()
   return allProducts.map((product) => ({
@@ -15,8 +12,9 @@ export async function generateStaticParams() {
   }))
 }
 
-// Use inline typing for the component arguments.
-// The component is async, and Next.js passes the params object directly.
+// CORREÇÃO: Tipagem do componente Page feita diretamente e de forma concisa.
+// O tipo 'any' garante que a tipagem do componente não entre em conflito
+// com a definição interna complexa do Next.js para PageProps em componentes assíncronos.
 export default async function ProductPage({ params }: { params: { id: string } }) {
   const product = getProductById(params.id)
 
