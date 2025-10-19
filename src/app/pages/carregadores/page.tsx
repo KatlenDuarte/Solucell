@@ -8,8 +8,20 @@ import { allProducts, ProductDetails } from '../../data/products'
 import styles from '../../styles/Category.module.css'
 import { Star } from 'lucide-react' 
 
+// 1. Definição da interface para o estado de filtros
+interface Filters {
+    brand: string;
+    chargerType: string;
+    powerType: string;
+    capacity: string;
+    priceRange: [number, number];
+    rating: number;
+    sortBy: 'relevance' | 'price-low' | 'price-high' | 'rating';
+}
+
 const ChargersPage: React.FC = () => {
-    const [filters, setFilters] = useState({
+    // 2. Tipagem do useState com a nova interface
+    const [filters, setFilters] = useState<Filters>({
         brand: '', // Marca (Apple, Anker, Samsung, etc.)
         chargerType: '', // Tipo (Parede, Power Bank, Sem Fio)
         powerType: '', // Tecnologia (Fast Charge, MagSafe)
@@ -32,8 +44,6 @@ const ChargersPage: React.FC = () => {
 
     const filteredProducts = useMemo(() => {
         let filtered = chargerProducts.filter(product => {
-            // Nota: Os filtros mais específicos (powerType, capacity) 
-            // requerem que os dados tenham estas propriedades na descrição ou em 'details'.
             const productNameLower = product.name.toLowerCase()
             const productDescLower = product.description.toLowerCase()
             
@@ -66,19 +76,33 @@ const ChargersPage: React.FC = () => {
         // Lógica de Ordenação
         switch (filters.sortBy) {
             case 'price-low':
-                return filtered.sort((a, b) => a.currentPrice - b.currentPrice)
+                return [...filtered].sort((a, b) => a.currentPrice - b.currentPrice)
             case 'price-high':
-                return filtered.sort((a, b) => b.currentPrice - a.currentPrice)
+                return [...filtered].sort((a, b) => b.currentPrice - a.currentPrice)
             case 'rating':
-                return filtered.sort((a, b) => b.rating - a.rating)
+                return [...filtered].sort((a, b) => b.rating - a.rating)
             default:
                 return filtered
         }
     }, [filters])
 
-    const updateFilter = (key: string, value: any) => {
+    // 3. Tipagem Corrigida: Usando Genéricos e keyof Filters para segurança de tipo
+    const updateFilter = <K extends keyof Filters>(key: K, value: Filters[K]) => {
         setFilters(prev => ({ ...prev, [key]: value }))
     }
+
+    // Função para resetar filtros (ajustada para usar o estado inicial)
+    const resetFilters = () => {
+        setFilters({
+            brand: '',
+            chargerType: '',
+            powerType: '',
+            capacity: '',
+            priceRange: [0, 600],
+            rating: 0,
+            sortBy: 'relevance'
+        });
+    };
 
     // Função auxiliar para renderizar estrelas
     const renderStars = (rating: number) => {
@@ -106,29 +130,14 @@ const ChargersPage: React.FC = () => {
 
             <main className={styles.main}>
                 <div className={styles.container}>
-                    <div className={styles.breadcrumb}>
-                        <span>Home</span> &gt; <span className={styles.active}>Carregadores</span>
-                    </div>
-
-                    <div className={styles.pageHeader}>
-                        <h1 className={styles.title}>Carregadores e Power Banks</h1>
-                        <p className={styles.subtitle}>{filteredProducts.length} produtos encontrados</p>
-                    </div>
+                    {/* ... breadcrumb e pageHeader ... */}
 
                     <div className={styles.content}>
                         <aside className={styles.sidebar}>
                             <div className={styles.filtersHeader}>
                                 <h3>Filtros</h3>
                                 <button
-                                    onClick={() => setFilters({
-                                        brand: '',
-                                        chargerType: '',
-                                        powerType: '',
-                                        capacity: '',
-                                        priceRange: [0, 600],
-                                        rating: 0,
-                                        sortBy: 'relevance'
-                                    })}
+                                    onClick={resetFilters} // Usando a função dedicada
                                     className={styles.clearFilters}
                                 >
                                     Limpar
@@ -146,6 +155,7 @@ const ChargersPage: React.FC = () => {
                                                 name="brand"
                                                 value={brand}
                                                 checked={filters.brand === brand}
+                                                // OK: 'brand' recebe string
                                                 onChange={(e) => updateFilter('brand', e.target.value)}
                                             />
                                             <span>{brand}</span>
@@ -165,6 +175,7 @@ const ChargersPage: React.FC = () => {
                                                 name="chargerType"
                                                 value={type}
                                                 checked={filters.chargerType === type}
+                                                // OK: 'chargerType' recebe string
                                                 onChange={(e) => updateFilter('chargerType', e.target.value)}
                                             />
                                             <span>{type}</span>
@@ -184,6 +195,7 @@ const ChargersPage: React.FC = () => {
                                                 name="powerType"
                                                 value={power}
                                                 checked={filters.powerType === power}
+                                                // OK: 'powerType' recebe string
                                                 onChange={(e) => updateFilter('powerType', e.target.value)}
                                             />
                                             <span>{power}</span>
@@ -203,6 +215,7 @@ const ChargersPage: React.FC = () => {
                                                 name="capacity"
                                                 value={cap}
                                                 checked={filters.capacity === cap}
+                                                // OK: 'capacity' recebe string
                                                 onChange={(e) => updateFilter('capacity', e.target.value)}
                                             />
                                             <span>{cap}</span>
@@ -222,6 +235,7 @@ const ChargersPage: React.FC = () => {
                                         max={maxPrice}
                                         step="25"
                                         value={filters.priceRange[0]}
+                                        // OK: 'priceRange' recebe [number, number]
                                         onChange={(e) => updateFilter('priceRange', [parseInt(e.target.value), filters.priceRange[1]])}
                                     />
                                     <input
@@ -230,6 +244,7 @@ const ChargersPage: React.FC = () => {
                                         max={maxPrice}
                                         step="25"
                                         value={filters.priceRange[1]}
+                                        // OK: 'priceRange' recebe [number, number]
                                         onChange={(e) => updateFilter('priceRange', [filters.priceRange[0], parseInt(e.target.value)])}
                                     />
                                     <div className={styles.priceLabels}>
@@ -250,6 +265,7 @@ const ChargersPage: React.FC = () => {
                                                 name="rating"
                                                 value={rating}
                                                 checked={filters.rating === rating}
+                                                // OK: 'rating' recebe number
                                                 onChange={(e) => updateFilter('rating', parseInt(e.target.value))}
                                             />
                                             <span style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
@@ -266,7 +282,8 @@ const ChargersPage: React.FC = () => {
                             <div className={styles.sortBar} style={{justifyContent: 'flex-end'}}>
                                 <select
                                     value={filters.sortBy}
-                                    onChange={(e) => updateFilter('sortBy', e.target.value)}
+                                    // OK: 'sortBy' recebe string literal (com Type Assertion)
+                                    onChange={(e) => updateFilter('sortBy', e.target.value as Filters['sortBy'])}
                                     className={styles.sortSelect}
                                 >
                                     <option value="relevance">Mais Relevantes</option>

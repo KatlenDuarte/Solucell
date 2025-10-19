@@ -1,13 +1,17 @@
 'use client'
 import React, { useState, useCallback, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-// [IMPORTS CORRIGIDOS] Importamos 'Image' do 'next/image'
 import Image from 'next/image' 
 import {
     Search, ShoppingCart, User, Heart, Menu, X,
     Smartphone, SmartphoneCharging, Headphones, BatteryCharging, LogIn, LogOut
 } from 'lucide-react'
 import styles from '../styles/Header.module.css'
+
+interface CartItem {
+    quantity: number;
+    price: number;
+}
 
 const Header = () => {
     const router = useRouter()
@@ -22,15 +26,18 @@ const Header = () => {
 
     useEffect(() => {
         const updateCounters = () => {
-            const cartData = JSON.parse(localStorage.getItem('cart') || '[]')
-            const totalItems = cartData.reduce((sum: number, item: any) => sum + item.quantity, 0)
+            const cartData: CartItem[] = JSON.parse(localStorage.getItem('cart') || '[]')
+            
+            const totalItems = cartData.reduce((sum: number, item: CartItem) => sum + item.quantity, 0)
+            
             const totalPrice = cartData
-                .reduce((sum: number, item: any) => sum + item.price * item.quantity, 0)
+                .reduce((sum: number, item: CartItem) => sum + item.price * item.quantity, 0)
                 .toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
 
             setCartItemCount(totalItems)
             setCartTotal(totalPrice)
-            const favoriteData = JSON.parse(localStorage.getItem('favoriteProducts') || '[]')
+            
+            const favoriteData: any[] = JSON.parse(localStorage.getItem('favoriteProducts') || '[]')
             setWishlistCount(favoriteData.length)
         }
 
@@ -93,12 +100,11 @@ const Header = () => {
             <div className={styles.container}>
                 <div className={styles.mainContent}>
                     <button className={styles.logoGroup} onClick={handleLogoClick}>
-                        {/* [CORREÇÃO LINHA 259/281] Substitui <img> por <Image /> e adiciona width/height */}
                         <Image 
                             src="/images/logo-solucell.png" 
                             alt="Logo" 
-                            width={120} // Adicione o valor real da largura
-                            height={32} // Adicione o valor real da altura
+                            width={120} // Ajuste o valor real da largura
+                            height={32} // Ajuste o valor real da altura
                             className={styles.logo} 
                         />
                     </button>

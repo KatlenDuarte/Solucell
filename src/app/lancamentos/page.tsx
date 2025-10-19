@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 import React, { useState, useMemo } from 'react'
 import Header from '../components/Header'
@@ -7,10 +7,19 @@ import { allProducts, Product } from '../data/products'
 import styles from '../styles/Category.module.css'
 import { Star, Zap } from 'lucide-react'
 
+// 1. Defina a interface para o objeto de filtros
+interface Filters {
+    category: string;
+    priceRange: [number, number];
+    rating: number;
+    sortBy: 'newest' | 'price-low' | 'price-high' | 'rating';
+}
+
 const LaunchPage: React.FC = () => {
     const maxGlobalPrice = 3000
 
-    const [filters, setFilters] = useState({
+    // 2. Tipa o estado inicial usando a interface
+    const [filters, setFilters] = useState<Filters>({
         category: '',
         priceRange: [0, maxGlobalPrice],
         rating: 0,
@@ -34,18 +43,21 @@ const LaunchPage: React.FC = () => {
 
         switch (filters.sortBy) {
             case 'price-low':
-                return filtered.sort((a, b) => a.currentPrice - b.currentPrice)
+                // Nota: O .sort() opera in-place, mas para useMemo, 
+                // é bom criar uma cópia para garantir a re-renderização.
+                return [...filtered].sort((a, b) => a.currentPrice - b.currentPrice) 
             case 'price-high':
-                return filtered.sort((a, b) => b.currentPrice - a.currentPrice)
+                return [...filtered].sort((a, b) => b.currentPrice - a.currentPrice)
             case 'rating':
-                return filtered.sort((a, b) => b.rating - a.rating)
+                return [...filtered].sort((a, b) => b.rating - a.rating)
             case 'newest': 
             default:
                 return filtered
         }
     }, [filters, baseLaunchProducts])
 
-    const updateFilter = (key: string, value: any) => {
+    // 3. Tipa a função para aceitar apenas chaves e valores válidos da interface Filters
+    const updateFilter = <K extends keyof Filters>(key: K, value: Filters[K]) => {
         setFilters(prev => ({ ...prev, [key]: value }))
     }
     
@@ -74,6 +86,8 @@ const LaunchPage: React.FC = () => {
         )
     }
 
+    // ... (restante do JSX)
+    
     return (
         <div className={styles.page}>
             <Header />
@@ -127,6 +141,8 @@ const LaunchPage: React.FC = () => {
                                         max={maxGlobalPrice}
                                         step="50"
                                         value={filters.priceRange[0]}
+                                        // O valor é um number[], mas o e.target.value é string.
+                                        // A função updateFilter agora aceita o array de números [number, number].
                                         onChange={(e) => updateFilter('priceRange', [parseInt(e.target.value), filters.priceRange[1]])}
                                     />
                                     <input
@@ -154,6 +170,7 @@ const LaunchPage: React.FC = () => {
                                                 name="rating"
                                                 value={rating}
                                                 checked={filters.rating === rating}
+                                                // O valor é um number. A função updateFilter aceita number para 'rating'.
                                                 onChange={(e) => updateFilter('rating', parseInt(e.target.value))}
                                             />
                                             <span style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
@@ -170,7 +187,8 @@ const LaunchPage: React.FC = () => {
                             <div className={styles.sortBar}>
                                 <select
                                     value={filters.sortBy}
-                                    onChange={(e) => updateFilter('sortBy', e.target.value)}
+                                    // O valor é string literal (sortBy). A função updateFilter aceita as strings literais.
+                                    onChange={(e) => updateFilter('sortBy', e.target.value as Filters['sortBy'])}
                                     className={styles.sortSelect}
                                 >
                                     <option value="newest">Mais Recente</option>

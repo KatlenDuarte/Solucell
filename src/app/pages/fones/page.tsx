@@ -3,26 +3,40 @@
 import React, { useState, useMemo } from 'react'
 import Header from '../../components/Header'
 import ProductCard from '../../components/ProductCard'
-import { allProducts, ProductDetails } from '../../data/products' 
+import { allProducts, ProductDetails } from '../../data/products' // Mantém ProductDetails, embora não esteja 100% claro qual é o tipo base de allProducts
 import styles from '../../styles/Category.module.css'
-import { Search, Star } from 'lucide-react' 
+import { Search, Star } from 'lucide-react'
+
+// 1. Definição da interface para o estado de filtros
+interface Filters {
+    brand: string;
+    connection: string;
+    noiseCancellation: string;
+    color: string;
+    priceRange: [number, number];
+    rating: number;
+    sortBy: 'relevance' | 'price-low' | 'price-high' | 'rating';
+}
 
 const HeadphonesPage: React.FC = () => {
-    const [filters, setFilters] = useState({
+    // 2. Tipagem do useState com a nova interface
+    const initialFilters: Filters = {
         brand: '',
-        connection: '', 
+        connection: '',
         noiseCancellation: '',
         color: '',
-        priceRange: [0, 2500], 
+        priceRange: [0, 2500],
         rating: 0,
         sortBy: 'relevance'
-    })
+    };
 
-    // Opções de filtro específicas para FONES
-    const brands = ['Apple', 'JBL', 'Samsung', 'Sony', 'Xiaomi']
-    const connectionOptions = ['Wireless', 'Com Fio', 'True Wireless']
-    const ncOptions = ['Ativo', 'Passivo', 'Não possui']
-    const colors = ['Preto', 'Branco', 'Azul', 'Vermelho']
+    const [filters, setFilters] = useState<Filters>(initialFilters)
+
+    // Opções de filtro específicas para FONES (usando 'as const' para tipagem mais rigorosa)
+    const brands = ['Apple', 'JBL', 'Samsung', 'Sony', 'Xiaomi'] as const
+    const connectionOptions = ['Wireless', 'Com Fio', 'True Wireless'] as const
+    const ncOptions = ['Ativo', 'Passivo', 'Não possui'] as const
+    const colors = ['Preto', 'Branco', 'Azul', 'Vermelho'] as const
 
     // 1. Filtragem Inicial: Apenas produtos da categoria Fones/Audio
     const headphoneProducts = allProducts.filter(product =>
@@ -31,32 +45,39 @@ const HeadphonesPage: React.FC = () => {
 
     const filteredProducts = useMemo(() => {
         let filtered = headphoneProducts.filter(product => {
+            const details = product.details as ProductDetails || {}
+
             // Filtros por Radio Button/Select
             const matchesBrand = !filters.brand || product.brand === filters.brand
-            const matchesColor = !filters.color || product.details?.color === filters.color
+            const matchesColor = !filters.color || details.color === filters.color
             
             // Filtro por Preço e Avaliação
             const matchesPrice = product.currentPrice >= filters.priceRange[0] &&
                 product.currentPrice <= filters.priceRange[1]
             const matchesRating = product.rating >= filters.rating
-
-            return matchesPrice && matchesRating && matchesBrand && matchesColor
         })
 
+        // Lógica de Ordenação
         switch (filters.sortBy) {
             case 'price-low':
-                return filtered.sort((a, b) => a.currentPrice - b.currentPrice)
+                return [...filtered].sort((a, b) => a.currentPrice - b.currentPrice)
             case 'price-high':
-                return filtered.sort((a, b) => b.currentPrice - a.currentPrice)
+                return [...filtered].sort((a, b) => b.currentPrice - a.currentPrice)
             case 'rating':
-                return filtered.sort((a, b) => b.rating - a.rating)
+                return [...filtered].sort((a, b) => b.rating - a.rating)
             default:
                 return filtered
         }
     }, [filters])
 
-    const updateFilter = (key: string, value: any) => {
+    // 3. Tipagem Corrigida: Uso de Genéricos para associar 'key' e 'value' de forma segura
+    const updateFilter = <K extends keyof Filters>(key: K, value: Filters[K]) => {
         setFilters(prev => ({ ...prev, [key]: value }))
+    }
+
+    // Função para resetar filtros usando o estado inicial
+    const resetFilters = () => {
+        setFilters(initialFilters);
     }
 
     // Função auxiliar para renderizar estrelas
@@ -108,15 +129,7 @@ const HeadphonesPage: React.FC = () => {
                             <div className={styles.filtersHeader}>
                                 <h3>Filtros</h3>
                                 <button
-                                    onClick={() => setFilters({
-                                        brand: '',
-                                        connection: '',
-                                        noiseCancellation: '',
-                                        color: '',
-                                        priceRange: [0, 2500],
-                                        rating: 0,
-                                        sortBy: 'relevance'
-                                    })}
+                                    onClick={resetFilters}
                                     className={styles.clearFilters}
                                 >
                                     Limpar
@@ -180,7 +193,7 @@ const HeadphonesPage: React.FC = () => {
                                 </div>
                             </div>
                             
-                             {/* Color Filter */}
+                            {/* Color Filter */}
                             <div className={styles.filterGroup}>
                                 <h4 className={styles.filterTitle}>Cor</h4>
                                 <div className={styles.filterOptions}>
@@ -203,7 +216,6 @@ const HeadphonesPage: React.FC = () => {
                             <div className={styles.filterGroup}>
                                 <h4 className={styles.filterTitle}>Faixa de Preço (Máx: R$ {maxPrice.toFixed(2)})</h4>
                                 <div className={styles.priceRange}>
-                                    {/* O range max deve ser dinâmico ou fixado num valor alto */}
                                     <input
                                         type="range"
                                         min="0"
@@ -252,10 +264,9 @@ const HeadphonesPage: React.FC = () => {
 
                         <div className={styles.productsArea}>
                             <div className={styles.sortBar} style={{justifyContent: 'flex-end'}}>
-                                {/* O campo de busca de compatibilidade de CasesPage não faz sentido aqui, então ele foi removido */}
                                 <select
                                     value={filters.sortBy}
-                                    onChange={(e) => updateFilter('sortBy', e.target.value)}
+                                    onChange={(e) => updateFilter('sortBy', e.target.value as Filters['sortBy'])}
                                     className={styles.sortSelect}
                                 >
                                     <option value="relevance">Mais Relevantes</option>

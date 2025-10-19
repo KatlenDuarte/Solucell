@@ -3,17 +3,16 @@
 import React, { useState, useMemo } from 'react'
 import Header from '../../components/Header'
 import ProductCard from '../../components/ProductCard'
-// Importe a lista de produtos seminovos e a interface correta
-import { usedPhoneProducts, UsedPhoneDetails, Product } from '../../data/products' 
+import { usedPhoneProducts, Product } from '../../data/products'
 import styles from '../../styles/Category.module.css'
 import { Search, Star } from 'lucide-react'
 
-// Define a interface para os filtros específicos de seminovos
+// Interface de filtros
 interface UsedPhoneFilters {
     brand: string;
-    modelSearch: string; // Para pesquisa de modelo livre
+    modelSearch: string;
     storage: string;
-    condition: string;
+    condition: string; // 'Ótimo', 'Bom', 'Regular'
     priceRange: [number, number];
     rating: number;
     sortBy: string;
@@ -25,43 +24,36 @@ const UsedPhonesPage: React.FC = () => {
         modelSearch: '',
         storage: '',
         condition: '',
-        priceRange: [500, 5000], // Faixa de preço maior para celulares
+        priceRange: [500, 5000],
         rating: 0,
         sortBy: 'relevance'
     })
 
-    // Opções de filtros baseadas nos seus produtos
-    const brands = ['Apple', 'Samsung', 'Xiaomi']
-    const storageOptions = ['64GB', '128GB', '256GB', '512GB']
-    const conditionOptions: UsedPhoneDetails['condition'][] = ['Excelente', 'Muito Bom', 'Bom']
+    const brands = Array.from(new Set(usedPhoneProducts.map(p => p.brand)))
+    const storageOptions = Array.from(new Set(usedPhoneProducts.map(p => p.storage)))
+    const conditionOptions = Array.from(new Set(
+        usedPhoneProducts.map(p => p.details?.compatibility).filter(Boolean) as string[]
+    ))
 
-    const updateFilter = (key: keyof UsedPhoneFilters, value: any) => {
+    const updateFilter = (key: keyof UsedPhoneFilters, value: string | number | number[]) => {
         setFilters(prev => ({ ...prev, [key]: value }))
     }
 
     const filteredProducts = useMemo(() => {
-        let filtered = usedPhoneProducts.filter((product: Product) => {
-            // Garante que os detalhes são do tipo correto (UsedPhoneDetails)
-            const details = product.details as UsedPhoneDetails
-            if (product.category !== 'Seminovos' || !details) return false;
-
-            const matchesBrand = !filters.brand || details.brand === filters.brand
-            const matchesStorage = !filters.storage || details.storage === filters.storage
-            const matchesCondition = !filters.condition || details.condition === filters.condition
+        const filtered = usedPhoneProducts.filter((product: Product) => {
             const matchesPrice = product.currentPrice >= filters.priceRange[0] &&
-                product.currentPrice <= filters.priceRange[1]
+                                 product.currentPrice <= filters.priceRange[1]
+
             const matchesRating = product.rating >= filters.rating
-
+            const matchesBrand = !filters.brand || product.brand === filters.brand
+            const matchesStorage = !filters.storage || product.storage === filters.storage
+            const matchesCondition = !filters.condition || product.details?.compatibility === filters.condition
             const modelSearchTerm = filters.modelSearch.toLowerCase().trim()
-            const matchesModelSearch = !modelSearchTerm || 
-                details.model.toLowerCase().includes(modelSearchTerm) ||
-                product.name.toLowerCase().includes(modelSearchTerm)
+            const matchesModelSearch = !modelSearchTerm || product.name.toLowerCase().includes(modelSearchTerm)
 
-            return matchesPrice && matchesRating && matchesBrand && 
-                   matchesStorage && matchesCondition && matchesModelSearch
+            return matchesPrice && matchesRating && matchesBrand && matchesStorage && matchesCondition && matchesModelSearch
         })
 
-        // Ordenação
         switch (filters.sortBy) {
             case 'price-low':
                 return filtered.sort((a, b) => a.currentPrice - b.currentPrice)
@@ -90,7 +82,6 @@ const UsedPhonesPage: React.FC = () => {
         )
     }
 
-    // Função para resetar todos os filtros
     const resetFilters = () => {
         setFilters({
             brand: '',
@@ -119,15 +110,10 @@ const UsedPhonesPage: React.FC = () => {
                         <aside className={styles.sidebar}>
                             <div className={styles.filtersHeader}>
                                 <h3>Filtros</h3>
-                                <button
-                                    onClick={resetFilters}
-                                    className={styles.clearFilters}
-                                >
-                                    Limpar
-                                </button>
+                                <button onClick={resetFilters} className={styles.clearFilters}>Limpar</button>
                             </div>
 
-                            {/* Filtro de Marca */}
+                            {/* Marca */}
                             <div className={styles.filterGroup}>
                                 <h4 className={styles.filterTitle}>Marca</h4>
                                 <div className={styles.filterOptions}>
@@ -146,7 +132,7 @@ const UsedPhonesPage: React.FC = () => {
                                 </div>
                             </div>
 
-                            {/* Filtro de Capacidade de Armazenamento */}
+                            {/* Armazenamento */}
                             <div className={styles.filterGroup}>
                                 <h4 className={styles.filterTitle}>Armazenamento</h4>
                                 <div className={styles.filterOptions}>
@@ -165,7 +151,7 @@ const UsedPhonesPage: React.FC = () => {
                                 </div>
                             </div>
 
-                            {/* Filtro de Condição (Grau de Recondicionamento) */}
+                            {/* Condição */}
                             <div className={styles.filterGroup}>
                                 <h4 className={styles.filterTitle}>Condição</h4>
                                 <div className={styles.filterOptions}>
@@ -184,14 +170,14 @@ const UsedPhonesPage: React.FC = () => {
                                 </div>
                             </div>
 
-                            {/* Filtro de Faixa de Preço */}
+                            {/* Faixa de preço */}
                             <div className={styles.filterGroup}>
                                 <h4 className={styles.filterTitle}>Faixa de Preço (R$)</h4>
                                 <div className={styles.priceRange}>
                                     <input
                                         type="range"
                                         min="500"
-                                        max="5000" // Aumentado para celulares
+                                        max="5000"
                                         step="100"
                                         value={filters.priceRange[0]}
                                         onChange={(e) => updateFilter('priceRange', [parseInt(e.target.value), filters.priceRange[1]])}
@@ -199,7 +185,7 @@ const UsedPhonesPage: React.FC = () => {
                                     <input
                                         type="range"
                                         min="500"
-                                        max="5000" // Aumentado para celulares
+                                        max="5000"
                                         step="100"
                                         value={filters.priceRange[1]}
                                         onChange={(e) => updateFilter('priceRange', [filters.priceRange[0], parseInt(e.target.value)])}
@@ -211,43 +197,19 @@ const UsedPhonesPage: React.FC = () => {
                                 </div>
                             </div>
 
-                            {/* Filtro de Avaliação */}
-                            <div className={styles.filterGroup}>
-                                <h4 className={styles.filterTitle}>Avaliação</h4>
-                                <div className={styles.ratingFilter}>
-                                    {[5, 4, 3, 2, 1].map(rating => (
-                                        <label key={rating} className={styles.filterOption}>
-                                            <input
-                                                type="radio"
-                                                name="rating"
-                                                value={rating}
-                                                checked={filters.rating === rating}
-                                                onChange={(e) => updateFilter('rating', parseInt(e.target.value))}
-                                            />
-                                            <span style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-                                                {renderStars(rating)}
-                                                {rating}+ estrelas
-                                            </span>
-                                        </label>
-                                    ))}
-                                </div>
-                            </div>
-
                         </aside>
+
                         <div className={styles.productsArea}>
                             <div className={styles.sortBar}>
-                                {/* Campo de busca de modelo/nome */}
                                 <div className={styles.compatibilitySearchInput}>
                                     <input
                                         type="text"
-                                        placeholder="Pesquisar por modelo (Ex: iPhone 13)"
+                                        placeholder="Pesquisar por modelo (Ex: iPhone 12)"
                                         value={filters.modelSearch}
                                         onChange={(e) => updateFilter('modelSearch', e.target.value)}
                                     />
                                     <Search size={20} style={{ color: '#aaa' }} />
                                 </div>
-                                
-                                {/* Dropdown de Ordenação */}
                                 <select
                                     value={filters.sortBy}
                                     onChange={(e) => updateFilter('sortBy', e.target.value)}
@@ -260,14 +222,12 @@ const UsedPhonesPage: React.FC = () => {
                                 </select>
                             </div>
 
-                            {/* Grade de Produtos */}
                             <div className={styles.productsGrid}>
                                 {filteredProducts.map(product => (
                                     <ProductCard key={product.id} {...product} />
                                 ))}
                             </div>
 
-                            {/* Estado Vazio */}
                             {filteredProducts.length === 0 && (
                                 <div className={styles.emptyState}>
                                     <div className={styles.emptyIcon}>📱</div>

@@ -70,7 +70,6 @@ const DealsPage: React.FC = () => {
         }
     }, [filters, baseDealsProducts])
 
-    // ⭐️ CORREÇÃO 3: Tipo 'any' substituído por um tipo mais específico para o filtro
     const updateFilter = (key: keyof typeof filters, value: string | number | number[]) => {
         setFilters(prev => ({ ...prev, [key]: value }))
     }

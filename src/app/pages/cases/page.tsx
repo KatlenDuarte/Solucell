@@ -3,12 +3,26 @@
 import React, { useState, useMemo } from 'react'
 import Header from '../../components/Header'
 import ProductCard from '../../components/ProductCard'
+// Importando accessoryProducts e a interface ProductDetails
 import { accessoryProducts, ProductDetails } from '../../data/products'
 import styles from '../../styles/Category.module.css'
 import { Search, Star } from 'lucide-react'
 
+// 1. Definição da interface para o estado de filtros
+interface Filters {
+    material: string;
+    compatibility: string;
+    compatibilitySearch: string;
+    color: string;
+    protection: string;
+    priceRange: [number, number];
+    rating: number;
+    sortBy: 'relevance' | 'price-low' | 'price-high' | 'rating';
+}
+
 const CasesPage: React.FC = () => {
-    const [filters, setFilters] = useState({
+    // 2. Tipagem do useState com a nova interface
+    const initialFilters: Filters = {
         material: '',
         compatibility: '',
         compatibilitySearch: '',
@@ -17,12 +31,14 @@ const CasesPage: React.FC = () => {
         priceRange: [0, 500],
         rating: 0,
         sortBy: 'relevance'
-    })
+    };
 
-    const materials = ['Silicone', 'Couro', 'Plástico', 'TPU', 'Híbrido']
-    const compatibilityOptions = ['iPhone 15', 'iPhone 14', 'Samsung S24', 'Samsung S23']
-    const colors = ['Transparente', 'Preto', 'Azul', 'Rosa', 'Verde', 'Vermelho']
-    const protection = ['Básica', 'Militar', 'Anti-impacto', 'À prova d\'água']
+    const [filters, setFilters] = useState<Filters>(initialFilters)
+
+    const materials = ['Silicone', 'Couro', 'Plástico', 'TPU', 'Híbrido'] as const
+    const compatibilityOptions = ['iPhone 15', 'iPhone 14', 'Samsung S24', 'Samsung S23'] as const
+    const colors = ['Transparente', 'Preto', 'Azul', 'Rosa', 'Verde', 'Vermelho'] as const
+    const protection = ['Básica', 'Militar', 'Anti-impacto', 'À prova d\'água'] as const
 
     const casesProducts = accessoryProducts.filter(product =>
         product.category === 'Capinhas' || product.name.toLowerCase().includes('capinha')
@@ -31,16 +47,21 @@ const CasesPage: React.FC = () => {
     const filteredProducts = useMemo(() => {
         let filtered = casesProducts.filter(product => {
             const details = product.details as ProductDetails || {}
+            // Assumindo que as propriedades details.material, details.color, details.protection existam
             const matchesMaterial = !filters.material || details.material === filters.material
             const matchesColor = !filters.color || details.color === filters.color
             const matchesProtection = !filters.protection || details.protection === filters.protection
+            
             const matchesPrice = product.currentPrice >= filters.priceRange[0] &&
                 product.currentPrice <= filters.priceRange[1]
             const matchesRating = product.rating >= filters.rating
+            
             const compatibilitySearchTerm = filters.compatibilitySearch.toLowerCase().trim()
             const compatibilityRadioTerm = filters.compatibility.toLowerCase().trim()
+            
             let matchesCompatibility = true
             const productCompatibility = details.compatibility ? details.compatibility.toLowerCase() : ''
+            
             if (compatibilitySearchTerm) {
                 matchesCompatibility = productCompatibility.includes(compatibilitySearchTerm) ||
                     product.name.toLowerCase().includes(compatibilitySearchTerm)
@@ -48,23 +69,30 @@ const CasesPage: React.FC = () => {
                 matchesCompatibility = productCompatibility.includes(compatibilityRadioTerm) ||
                     product.name.toLowerCase().includes(compatibilityRadioTerm)
             }
+            
             return matchesPrice && matchesRating && matchesMaterial && matchesColor && matchesProtection && matchesCompatibility
         })
 
         switch (filters.sortBy) {
             case 'price-low':
-                return filtered.sort((a, b) => a.currentPrice - b.currentPrice)
+                return [...filtered].sort((a, b) => a.currentPrice - b.currentPrice)
             case 'price-high':
-                return filtered.sort((a, b) => b.currentPrice - a.currentPrice)
+                return [...filtered].sort((a, b) => b.currentPrice - a.currentPrice)
             case 'rating':
-                return filtered.sort((a, b) => b.rating - a.rating)
+                return [...filtered].sort((a, b) => b.rating - a.rating)
             default:
                 return filtered
         }
     }, [filters])
 
-    const updateFilter = (key: string, value: any) => {
+    // 3. Tipagem Corrigida: Uso de Genéricos para associar 'key' e 'value'
+    const updateFilter = <K extends keyof Filters>(key: K, value: Filters[K]) => {
         setFilters(prev => ({ ...prev, [key]: value }))
+    }
+    
+    // Função para resetar filtros usando o estado inicial
+    const resetFilters = () => {
+        setFilters(initialFilters);
     }
 
     const renderStars = (rating: number) => {
@@ -83,6 +111,8 @@ const CasesPage: React.FC = () => {
         )
     }
 
+    const maxPrice = Math.max(...casesProducts.map(p => p.currentPrice), 500)
+
     return (
         <div className={styles.page}>
             <Header />
@@ -92,7 +122,7 @@ const CasesPage: React.FC = () => {
                         <span>Home</span> &gt; <span className={styles.active}>Cases</span>
                     </div>
                     <div className={styles.pageHeader}>
-                        <h1 className={styles.title}>Cases</h1>
+                        <h1 className={styles.title}>Capinhas e Cases de Proteção</h1>
                         <p className={styles.subtitle}>{filteredProducts.length} produtos encontrados</p>
                     </div>
                     <div className={styles.content}>
@@ -100,21 +130,14 @@ const CasesPage: React.FC = () => {
                             <div className={styles.filtersHeader}>
                                 <h3>Filtros</h3>
                                 <button
-                                    onClick={() => setFilters({
-                                        material: '',
-                                        compatibility: '',
-                                        compatibilitySearch: '',
-                                        color: '',
-                                        protection: '',
-                                        priceRange: [0, 500],
-                                        rating: 0,
-                                        sortBy: 'relevance'
-                                    })}
+                                    onClick={resetFilters} // Usando a função dedicada
                                     className={styles.clearFilters}
                                 >
                                     Limpar
                                 </button>
                             </div>
+
+                            {/* Material Filter */}
                             <div className={styles.filterGroup}>
                                 <h4 className={styles.filterTitle}>Material</h4>
                                 <div className={styles.filterOptions}>
@@ -125,6 +148,7 @@ const CasesPage: React.FC = () => {
                                                 name="material"
                                                 value={material}
                                                 checked={filters.material === material}
+                                                // OK: 'material' recebe string
                                                 onChange={(e) => updateFilter('material', e.target.value)}
                                             />
                                             <span>{material}</span>
@@ -132,6 +156,8 @@ const CasesPage: React.FC = () => {
                                     ))}
                                 </div>
                             </div>
+                            
+                            {/* Compatibility Filter (Radio Buttons) */}
                             <div className={styles.filterGroup}>
                                 <h4 className={styles.filterTitle}>Compatibilidade (Modelo)</h4>
                                 <div className={styles.filterOptions} style={{ marginTop: '10px' }}>
@@ -142,8 +168,10 @@ const CasesPage: React.FC = () => {
                                                 name="compatibility"
                                                 value={comp}
                                                 checked={filters.compatibility === comp}
+                                                // OK: 'compatibility' recebe string
                                                 onChange={(e) => {
                                                     updateFilter('compatibility', e.target.value)
+                                                    // OK: 'compatibilitySearch' recebe string
                                                     updateFilter('compatibilitySearch', '')
                                                 }}
                                             />
@@ -152,6 +180,8 @@ const CasesPage: React.FC = () => {
                                     ))}
                                 </div>
                             </div>
+
+                            {/* Color Filter */}
                             <div className={styles.filterGroup}>
                                 <h4 className={styles.filterTitle}>Cor</h4>
                                 <div className={styles.filterOptions}>
@@ -162,6 +192,7 @@ const CasesPage: React.FC = () => {
                                                 name="color"
                                                 value={color}
                                                 checked={filters.color === color}
+                                                // OK: 'color' recebe string
                                                 onChange={(e) => updateFilter('color', e.target.value)}
                                             />
                                             <span>{color}</span>
@@ -169,6 +200,8 @@ const CasesPage: React.FC = () => {
                                     ))}
                                 </div>
                             </div>
+
+                            {/* Protection Filter */}
                             <div className={styles.filterGroup}>
                                 <h4 className={styles.filterTitle}>Nível de Proteção</h4>
                                 <div className={styles.filterOptions}>
@@ -179,6 +212,7 @@ const CasesPage: React.FC = () => {
                                                 name="protection"
                                                 value={prot}
                                                 checked={filters.protection === prot}
+                                                // OK: 'protection' recebe string
                                                 onChange={(e) => updateFilter('protection', e.target.value)}
                                             />
                                             <span>{prot}</span>
@@ -186,31 +220,39 @@ const CasesPage: React.FC = () => {
                                     ))}
                                 </div>
                             </div>
+
+                            {/* Price Range */}
                             <div className={styles.filterGroup}>
-                                <h4 className={styles.filterTitle}>Faixa de Preço</h4>
+                                <h4 className={styles.filterTitle}>Faixa de Preço (Máx: R$ {maxPrice.toFixed(2)})</h4>
                                 <div className={styles.priceRange}>
+                                    {/* Primeiro Range Input */}
                                     <input
                                         type="range"
                                         min="0"
-                                        max="500"
+                                        max={maxPrice}
                                         step="25"
                                         value={filters.priceRange[0]}
+                                        // OK: 'priceRange' recebe [number, number]
                                         onChange={(e) => updateFilter('priceRange', [parseInt(e.target.value), filters.priceRange[1]])}
                                     />
+                                    {/* Segundo Range Input */}
                                     <input
                                         type="range"
                                         min="0"
-                                        max="500"
+                                        max={maxPrice}
                                         step="25"
                                         value={filters.priceRange[1]}
+                                        // OK: 'priceRange' recebe [number, number]
                                         onChange={(e) => updateFilter('priceRange', [filters.priceRange[0], parseInt(e.target.value)])}
                                     />
                                     <div className={styles.priceLabels}>
-                                        <span>R$ {filters.priceRange[0]}</span>
-                                        <span>R$ {filters.priceRange[1]}</span>
+                                        <span>R$ {filters.priceRange[0].toFixed(2)}</span>
+                                        <span>R$ {filters.priceRange[1].toFixed(2)}</span>
                                     </div>
                                 </div>
                             </div>
+
+                            {/* Rating Filter */}
                             <div className={styles.filterGroup}>
                                 <h4 className={styles.filterTitle}>Avaliação</h4>
                                 <div className={styles.ratingFilter}>
@@ -221,6 +263,7 @@ const CasesPage: React.FC = () => {
                                                 name="rating"
                                                 value={rating}
                                                 checked={filters.rating === rating}
+                                                // OK: 'rating' recebe number
                                                 onChange={(e) => updateFilter('rating', parseInt(e.target.value))}
                                             />
                                             <span style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
@@ -234,21 +277,25 @@ const CasesPage: React.FC = () => {
                         </aside>
                         <div className={styles.productsArea}>
                             <div className={styles.sortBar}>
+                                {/* Compatibility Search Input */}
                                 <div className={styles.compatibilitySearchInput}>
                                     <input
                                         type="text"
                                         placeholder="Ex: iPhone 15 Pro Max"
                                         value={filters.compatibilitySearch}
+                                        // OK: 'compatibilitySearch' recebe string
                                         onChange={(e) => {
                                             updateFilter('compatibilitySearch', e.target.value)
-                                            updateFilter('compatibility', '')
+                                            updateFilter('compatibility', '') // Limpa a opção de rádio se estiver digitando
                                         }}
                                     />
                                     <Search size={20} style={{ color: '#aaa' }} />
                                 </div>
+                                {/* Sort Select */}
                                 <select
                                     value={filters.sortBy}
-                                    onChange={(e) => updateFilter('sortBy', e.target.value)}
+                                    // OK: 'sortBy' recebe string literal (com Type Assertion)
+                                    onChange={(e) => updateFilter('sortBy', e.target.value as Filters['sortBy'])}
                                     className={styles.sortSelect}
                                 >
                                     <option value="relevance">Mais Relevantes</option>
