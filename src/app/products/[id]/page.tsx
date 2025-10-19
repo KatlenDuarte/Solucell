@@ -4,7 +4,7 @@ import ProductDetailClient from './ProductDetailClient'
 
 interface ProductPageProps {
   params: {
-    id: string
+    id: string 
   }
 }
 
