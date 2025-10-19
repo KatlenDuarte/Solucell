@@ -1,7 +1,7 @@
 'use client'
 import React, { useState, useCallback, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import Image from 'next/image' 
+import Image from 'next/image'
 import {
     Search, ShoppingCart, User, Heart, Menu, X,
     Smartphone, SmartphoneCharging, Headphones, BatteryCharging, LogIn, LogOut
@@ -27,17 +27,18 @@ const Header = () => {
     useEffect(() => {
         const updateCounters = () => {
             const cartData: CartItem[] = JSON.parse(localStorage.getItem('cart') || '[]')
-            
+
             const totalItems = cartData.reduce((sum: number, item: CartItem) => sum + item.quantity, 0)
-            
+
             const totalPrice = cartData
                 .reduce((sum: number, item: CartItem) => sum + item.price * item.quantity, 0)
                 .toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
 
             setCartItemCount(totalItems)
             setCartTotal(totalPrice)
-            
-            const favoriteData: any[] = JSON.parse(localStorage.getItem('favoriteProducts') || '[]')
+
+            // CORREÇÃO AQUI: Substituímos 'any[]' por 'string[]'
+            const favoriteData: string[] = JSON.parse(localStorage.getItem('favoriteProducts') || '[]')
             setWishlistCount(favoriteData.length)
         }
 
@@ -100,12 +101,12 @@ const Header = () => {
             <div className={styles.container}>
                 <div className={styles.mainContent}>
                     <button className={styles.logoGroup} onClick={handleLogoClick}>
-                        <Image 
-                            src="/images/logo-solucell.png" 
-                            alt="Logo" 
-                            width={120} // Ajuste o valor real da largura
-                            height={32} // Ajuste o valor real da altura
-                            className={styles.logo} 
+                        <Image
+                            src="/images/logo-solucell.png"
+                            alt="Logo"
+                            width={120}
+                            height={32}
+                            className={styles.logo}
                         />
                     </button>
 

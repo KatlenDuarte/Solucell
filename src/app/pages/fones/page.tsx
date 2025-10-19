@@ -44,7 +44,7 @@ const HeadphonesPage: React.FC = () => {
     )
 
     const filteredProducts = useMemo(() => {
-        let filtered = headphoneProducts.filter(product => {
+        const filtered = headphoneProducts.filter(product => {
             const details = product.details as ProductDetails || {}
 
             // Filtros por Radio Button/Select

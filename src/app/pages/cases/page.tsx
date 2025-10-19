@@ -45,7 +45,7 @@ const CasesPage: React.FC = () => {
     )
 
     const filteredProducts = useMemo(() => {
-        let filtered = casesProducts.filter(product => {
+        const filtered = casesProducts.filter(product => {
             const details = product.details as ProductDetails || {}
             // Assumindo que as propriedades details.material, details.color, details.protection existam
             const matchesMaterial = !filters.material || details.material === filters.material

@@ -33,7 +33,7 @@ const LaunchPage: React.FC = () => {
     }, [])
 
     const filteredAndSortedProducts = useMemo(() => {
-        let filtered = baseLaunchProducts.filter(product => {
+        const filtered = baseLaunchProducts.filter(product => {
             const matchesCategory = !filters.category || product.category === filters.category
             const matchesPrice = product.currentPrice >= filters.priceRange[0] &&
                 product.currentPrice <= filters.priceRange[1]

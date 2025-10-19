@@ -34,7 +34,7 @@ const AcessoriosPage: React.FC = () => {
     const brands = ['Apple', 'JBL', 'Anker', 'Spigen', 'Belkin']
 
     const filteredProducts = useMemo(() => {
-        let filtered = accessoryProducts.filter(product => {
+        const filtered = accessoryProducts.filter(product => {
             // ... lógica de filtro
             const matchesType = !filters.type || product.category === filters.type
             // Você pode adicionar a lógica para compatibilidade e marca aqui

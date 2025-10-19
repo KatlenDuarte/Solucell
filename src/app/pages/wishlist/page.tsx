@@ -428,7 +428,7 @@ export default function Favorites() {
                             Nenhum resultado encontrado.
                         </h3>
                         <p className="empty-text">
-                            Ajuste seus filtros ou clique em "Limpar filtros".
+                            Ajuste seus filtros ou clique em &quot;Limpar filtros&quot;.
                         </p>
                     </div>
                 )}

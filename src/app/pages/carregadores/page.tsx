@@ -43,7 +43,7 @@ const ChargersPage: React.FC = () => {
     )
 
     const filteredProducts = useMemo(() => {
-        let filtered = chargerProducts.filter(product => {
+        const filtered = chargerProducts.filter(product => {
             const productNameLower = product.name.toLowerCase()
             const productDescLower = product.description.toLowerCase()
             
