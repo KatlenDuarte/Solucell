@@ -4,7 +4,7 @@ import { notFound } from 'next/navigation'
 import { getProductById, getAllProducts } from '../../data/products'
 import ProductDetailClient from './ProductDetailClient'
 
-// Gera as rotas estáticas
+// Rotas estáticas
 export async function generateStaticParams() {
   const allProducts = await getAllProducts()
   return allProducts.map((product) => ({
@@ -13,7 +13,8 @@ export async function generateStaticParams() {
 }
 
 // Página do produto
-export default async function ProductPage({ params }: { params: { id: string } }) {
+export default async function ProductPage(props: any) {
+  const { params } = props
   const product = await getProductById(params.id)
 
   if (!product) {
