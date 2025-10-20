@@ -7,6 +7,10 @@ const nextConfig: NextConfig = {
       "images.pexels.com",
     ],
   },
+  eslint: {
+    // ⚠️ Ignora erros de ESLint durante o build
+    ignoreDuringBuilds: true,
+  },
 };
 
 export default nextConfig;

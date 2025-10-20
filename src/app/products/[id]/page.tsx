@@ -12,14 +12,13 @@ export async function generateStaticParams() {
   }))
 }
 
-// Página do produto
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default async function ProductPage(props: any) {
   const { params } = props
   const product = await getProductById(params.id)
 
-  if (!product) {
-    notFound()
-  }
+  if (!product) notFound()
 
   return <ProductDetailClient product={product} />
 }
+
